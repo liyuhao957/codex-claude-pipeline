@@ -1,0 +1,45 @@
+#!/bin/bash
+set -euo pipefail
+
+# --- Resolve codex binary ---
+if command -v codex &>/dev/null; then
+    CODEX_BIN="codex"
+elif [[ -x "/Applications/Codex.app/Contents/Resources/codex" ]]; then
+    CODEX_BIN="/Applications/Codex.app/Contents/Resources/codex"
+else
+    echo "ERROR: codex not found in PATH or at /Applications/Codex.app/Contents/Resources/codex" >&2
+    exit 127
+fi
+
+# --- Timeout (default 600s, override via CODEX_TIMEOUT) ---
+TIMEOUT="${CODEX_TIMEOUT:-600}"
+
+# --- Resolve timeout command (not available by default on macOS) ---
+TIMEOUT_CMD=""
+if command -v timeout &>/dev/null; then
+    TIMEOUT_CMD="timeout"
+elif command -v gtimeout &>/dev/null; then
+    TIMEOUT_CMD="gtimeout"
+else
+    echo "WARN: neither 'timeout' nor 'gtimeout' found; running without timeout" >&2
+fi
+
+# --- Prompt from argument or stdin ---
+if [[ $# -ge 1 && "$1" != "-" ]]; then
+    PROMPT="$1"
+else
+    PROMPT="$(cat)"
+fi
+
+if [[ -z "$PROMPT" ]]; then
+    echo "ERROR: no prompt provided" >&2
+    echo "Usage: codex-call \"prompt\" or echo \"prompt\" | codex-call -" >&2
+    exit 1
+fi
+
+# --- Execute codex with read-only sandbox ---
+if [[ -n "$TIMEOUT_CMD" ]]; then
+    exec "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" exec --sandbox read-only "$PROMPT"
+else
+    exec "$CODEX_BIN" exec --sandbox read-only "$PROMPT"
+fi
