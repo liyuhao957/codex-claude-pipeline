@@ -1,5 +1,7 @@
 # codex-claude-pipeline
 
+[中文版](./README.zh-CN.md)
+
 Claude Code + Codex dual-agent collaboration via slash command. Claude Code acts as orchestrator and sole coder; Codex serves as read-only consultant for design review and code review.
 
 ## What It Does
@@ -22,7 +24,7 @@ No external orchestrator needed. Claude Code drives the entire flow from inside 
 ## Install
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/liyuhao957/codex-claude-pipeline.git
 cd codex-claude-pipeline
 ./install.sh
 ```
@@ -40,6 +42,14 @@ Inside any Claude Code session (must be in a git repo):
 ```
 
 Claude Code will follow the template automatically: analyze the project, write a design, call Codex for review, implement, and get a code review from Codex.
+
+## Key Features
+
+- **Context-aware debate**: From round 2 onward, the full debate history is included in the Codex prompt with explicit instructions not to repeat rejected issues — eliminates wasted rounds.
+- **Auto-convergence**: Reviews pass automatically when Codex reports no new P0/P1, or only repeats previously rejected issues without new technical arguments.
+- **Clean workspace**: `.design/` is wiped at the start of each run to prevent stale artifacts from interfering.
+- **Commit prompt**: After completion, you're asked whether to commit — no manual step needed.
+- **Severity triage**: P0 (must fix), P1 (should fix), P2 (nice to have, can skip). Only P0/P1 drive iteration.
 
 ## Artifacts
 
