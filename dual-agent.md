@@ -52,7 +52,7 @@ Bash("~/.claude/bin/codex-call - <<'PROMPT'\nyour long prompt here\nPROMPT")
 
 ```
 ~/.claude/bin/codex-call - <<'PROMPT'
-审查 .design/design.md 中的设计文档。
+读取 .design/design.md 文件内容，审查其中的设计文档。
 
 要求：
 - 指出设计缺陷、遗漏、潜在问题
@@ -81,7 +81,7 @@ PROMPT
 
 ### 阶段三：代码审查（最多 3 轮）
 
-1. 获取 git diff（`git diff` 或 `git diff HEAD`）
+1. 获取 git diff 并保存到文件（`git diff > .design/diff.txt`）
 2. 调用 Codex 审查代码：
 
 ```
@@ -91,6 +91,7 @@ PROMPT
 上下文：
 - 设计文档在 .design/design.md
 - 改动摘要在 .design/changeset.md
+- git diff 输出在 .design/diff.txt
 
 要求：
 - 审查代码质量、安全性、性能、正确性
