@@ -1,78 +1,80 @@
 # codex-claude-pipeline
 
-Fully automated dual-agent pipeline: **Codex** designs, **Claude Code** reviews and implements, then they debate until consensus.
+Claude Code + Codex dual-agent collaboration via slash command. Claude Code acts as orchestrator and sole coder; Codex serves as read-only consultant for design review and code review.
 
 ## What It Does
 
 ```
-You: dual-agent "add a favorites feature"
+You (in Claude Code): /dual-agent add a favorites feature
 
-Phase 1: Design Debate (up to 3 rounds)
-  Codex writes design doc  ->  Claude Code reviews  ->  iterate
+Phase 1 — Design Debate (up to 3 rounds)
+  Claude Code writes design doc  →  Codex reviews  →  iterate until no P0/P1
 
-Phase 2: Implementation
-  Claude Code implements the approved design
+Phase 2 — Implementation
+  Claude Code implements the approved design, runs tests
 
-Phase 3: Code Review Debate (up to 3 rounds)
-  Codex reviews code  ->  Claude Code fixes  ->  iterate
+Phase 3 — Code Review (up to 3 rounds)
+  Codex reviews git diff  →  Claude Code fixes  →  iterate until no P0/P1
 ```
 
-Zero human intervention. The script orchestrates both agents, parses `VERDICT: PASS/REVISE`, and stops when they agree (or after 3 rounds).
+No external orchestrator needed. Claude Code drives the entire flow from inside its own session using a slash command template.
 
 ## Install
 
 ```bash
-# Copy to PATH
-sudo cp dual-agent /usr/local/bin/dual-agent
-sudo chmod +x /usr/local/bin/dual-agent
-
-# Prerequisites
-# - codex CLI (or Codex.app installed)
-# - claude CLI (Claude Code)
+git clone <this-repo>
+cd codex-claude-pipeline
+./install.sh
 ```
+
+This copies two files into your home directory:
+- `~/.claude/bin/codex-call` — shell wrapper that invokes Codex in read-only sandbox
+- `~/.claude/commands/dual-agent.md` — slash command template defining the 3-phase flow
 
 ## Usage
 
-```bash
-cd your-project        # must be a git repo
-dual-agent "your feature requirement"
+Inside any Claude Code session (must be in a git repo):
 
-# Options
-dual-agent --max-rounds 2 "fix login bug"    # fewer debate rounds
-dual-agent --timeout 300 "small change"      # shorter timeout per call
-dual-agent --yolo "quick fix"                # bypass Codex sandbox
 ```
+/dual-agent your requirement here
+```
+
+Claude Code will follow the template automatically: analyze the project, write a design, call Codex for review, implement, and get a code review from Codex.
 
 ## Artifacts
 
-After running, check `.design/` in your project:
+All intermediate work products are saved to `.design/` in your project:
 
 ```
 .design/
 ├── design.md                # Final design document
 ├── design-debate.md         # Phase 1 debate log
 ├── changeset.md             # Implementation summary
+├── diff.txt                 # git diff for code review
 └── implementation-debate.md # Phase 3 debate log
 ```
 
 ## How It Works
 
-The script (`dual-agent`) is a stateless orchestrator. It doesn't understand code. It just:
+The slash command template (`dual-agent.md`) instructs Claude Code to follow a strict 3-phase protocol:
 
-1. Calls `codex exec` or `codex review` via subprocess
-2. Calls `claude -p` via subprocess
-3. Parses output for `VERDICT: PASS` or `VERDICT: REVISE`
-4. Loops or advances based on the verdict
+1. **Design debate** — Claude Code writes `.design/design.md`, then calls Codex via `codex-call` to review it. P0/P1 issues must be addressed or rebutted; P2 is optional. Up to 3 rounds.
+2. **Implementation** — Claude Code implements the approved design and writes `.design/changeset.md`.
+3. **Code review** — Claude Code generates a diff and calls Codex to review the actual code changes. Same P0/P1/P2 rules apply. Up to 3 rounds.
 
-Both agents read/write files in `.design/` to share context. No direct agent-to-agent communication.
+`codex-call` is a thin Bash wrapper that resolves the Codex binary, enforces a timeout (default 600s, configurable via `CODEX_TIMEOUT`), and always runs Codex with `--sandbox read-only`.
 
 ## Requirements
 
-- Python 3.8+
-- macOS (Codex fallback path is macOS-specific)
-- Git repository (Phase 3 uses `git diff`)
-- `codex` CLI: in PATH or at `/Applications/Codex.app/Contents/Resources/codex`
-- `claude` CLI: in PATH
+- macOS
+- Git repository (the slash command checks for this)
+- `codex` CLI in PATH (or Codex.app installed)
+- `claude` CLI (Claude Code)
+- Optional: `timeout` or `gtimeout` (from coreutils) for Codex call timeouts
+
+## Legacy Script
+
+The `dual-agent` Python script in the repo root is the original external orchestrator approach. It is superseded by the slash command workflow described above but kept for reference.
 
 ## License
 
