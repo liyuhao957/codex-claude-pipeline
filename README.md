@@ -82,10 +82,6 @@ The slash command template (`dual-agent.md`) instructs Claude Code to follow a s
 - `claude` CLI (Claude Code)
 - Optional: `timeout` or `gtimeout` (from coreutils) for Codex call timeouts
 
-## Legacy Script
-
-The `dual-agent` Python script in the repo root is the original external orchestrator approach. It is superseded by the slash command workflow described above but kept for reference.
-
 ## License
 
 MIT

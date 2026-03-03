@@ -11,7 +11,6 @@
 codex-call          # Shell wrapper: invokes Codex CLI in read-only sandbox
 dual-agent.md       # Slash command template: defines 3-phase collaboration flow
 install.sh          # Installs codex-call + dual-agent.md to ~/.claude/
-dual-agent          # Legacy Python orchestrator (kept for reference, not used)
 docs/               # Planning docs and workflow notes
 ```
 
