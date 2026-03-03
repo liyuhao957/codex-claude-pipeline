@@ -57,12 +57,20 @@ All intermediate work products are saved to `.design/` in your project:
 
 ```
 .design/
-├── design.md                # Final design document
-├── design-debate.md         # Phase 1 debate log
-├── changeset.md             # Implementation summary
-├── diff.txt                 # git diff for code review
-└── implementation-debate.md # Phase 3 debate log
+├── design.md                # Design document (Phase 1 output)
+├── design-debate.md         # Design debate log (Phase 1)
+├── changeset.md             # Implementation summary (Phase 2 output)
+├── diff.txt                 # git diff snapshot (Phase 3 input)
+└── implementation-debate.md # Code review debate log (Phase 3)
 ```
+
+| File | Description |
+|------|-------------|
+| `design.md` | The design document written by Claude Code, revised through Codex review rounds. The final version reflects all accepted feedback. |
+| `design-debate.md` | Full record of the design debate: what issues Codex raised each round, and whether Claude Code accepted (with fix) or rejected (with rationale). |
+| `changeset.md` | Summary written after implementation: which files were changed, what was done in each, risk points, and items needing manual confirmation. |
+| `diff.txt` | Raw `git diff` output, exported as a file for Codex to review during the code review phase. |
+| `implementation-debate.md` | Same format as `design-debate.md`, but for the code review phase: Codex's findings on the actual code and Claude Code's responses. |
 
 ## How It Works
 

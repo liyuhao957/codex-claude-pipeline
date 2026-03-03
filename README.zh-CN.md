@@ -57,12 +57,20 @@ Claude Code 会自动按模板执行：分析项目、编写设计、调用 Code
 
 ```
 .design/
-├── design.md                # 最终设计文档
-├── design-debate.md         # 阶段一辩论记录
-├── changeset.md             # 实现改动摘要
-├── diff.txt                 # 代码审查用的 git diff
-└── implementation-debate.md # 阶段三辩论记录
+├── design.md                # 设计文档（阶段一产出）
+├── design-debate.md         # 设计辩论记录（阶段一）
+├── changeset.md             # 实现改动摘要（阶段二产出）
+├── diff.txt                 # git diff 快照（阶段三输入）
+└── implementation-debate.md # 代码审查辩论记录（阶段三）
 ```
+
+| 文件 | 说明 |
+|------|------|
+| `design.md` | Claude Code 编写的设计文档，经过 Codex 审查后反复修改，最终定稿的版本，包含目标、改动范围、边界情况等。 |
+| `design-debate.md` | 设计阶段的完整辩论记录：每轮 Codex 提了什么问题，Claude Code 是接受修复还是拒绝及其理由。 |
+| `changeset.md` | 实现完成后的改动摘要：改了哪些文件、每个文件做了什么、风险点、需要人工确认的事项。 |
+| `diff.txt` | `git diff` 的原始输出，导出为文件供 Codex 在代码审查阶段使用。 |
+| `implementation-debate.md` | 代码审查阶段的辩论记录，格式同 `design-debate.md`：Codex 对实际代码的审查意见和 Claude Code 的处理决定。 |
 
 ## 工作原理
 
