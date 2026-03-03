@@ -13,6 +13,10 @@ fi
 
 # --- Timeout (default 600s, override via CODEX_TIMEOUT) ---
 TIMEOUT="${CODEX_TIMEOUT:-600}"
+if ! [[ "$TIMEOUT" =~ ^[0-9]+$ ]] || [[ "$TIMEOUT" -eq 0 ]]; then
+    echo "ERROR: CODEX_TIMEOUT must be a positive integer (got: '$TIMEOUT')" >&2
+    exit 1
+fi
 
 # --- Resolve timeout command (not available by default on macOS) ---
 TIMEOUT_CMD=""
@@ -27,8 +31,12 @@ fi
 # --- Prompt from argument or stdin ---
 if [[ $# -ge 1 && "$1" != "-" ]]; then
     PROMPT="$1"
-else
+elif [[ ! -t 0 ]]; then
     PROMPT="$(cat)"
+else
+    echo "ERROR: no prompt provided" >&2
+    echo "Usage: codex-call \"prompt\" or echo \"prompt\" | codex-call" >&2
+    exit 1
 fi
 
 if [[ -z "$PROMPT" ]]; then
