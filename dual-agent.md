@@ -38,8 +38,14 @@ Bash("~/.claude/bin/codex-call - <<'PROMPT'\nyour long prompt here\nPROMPT")
 ### 准备
 
 1. 确认当前在 git 仓库中（运行 `git rev-parse --is-inside-work-tree`）
-2. 清理并创建 `.design/` 目录（`rm -rf .design && mkdir -p .design`）
-3. 告知用户："开始三阶段双 Agent 协作流程"
+2. 检查工作区是否干净（`git status --porcelain`）
+   - 如果有未提交的改动 → 警告用户，建议先 `git commit` 或 `git stash` 再继续
+   - 用户确认继续后才往下走
+3. 创建 feature 分支：`git checkout -b feat/<需求简述>`
+   - 分支名从需求中提取关键词，用英文小写 + 短横线，如 `feat/add-login-page`
+   - 记录基准分支名到变量 `BASE_BRANCH`（即创建分支前所在的分支），后续 diff 使用
+4. 清理并创建 `.design/` 目录（`rm -rf .design && mkdir -p .design`）
+5. 告知用户："开始三阶段双 Agent 协作流程（分支：feat/xxx，基准：BASE_BRANCH）"
 
 ### 阶段一：设计辩论（最多 3 轮）
 
@@ -82,14 +88,18 @@ PROMPT
 2. 实现所有代码改动
 3. 运行项目的构建/测试命令
 4. 写改动摘要到 `.design/changeset.md`，包含：
-   - 修改/新建的文件清单
+   - 修改/新建的文件清单（必须与实际改动的文件一一对应，不多不少）
    - 风险点
    - 需要人工确认的事项
+   - 注意：写完后用 `git diff --name-only $BASE_BRANCH...HEAD` 交叉验证文件清单的准确性
 
 ### 阶段三：代码审查（最多 3 轮）
 
-1. 获取 git diff 并保存到文件（`git diff > .design/diff.txt`）
-2. 调用 Codex 审查代码：
+1. 获取精确范围的 diff 并保存到文件：
+   - 优先：`git diff $BASE_BRANCH...HEAD > .design/diff.txt`（只含本分支改动）
+   - 备选（用户跳过了建分支）：只 diff design.md 中列出的文件 → `git diff -- file1 file2 ... > .design/diff.txt`
+2. 从 `.design/design.md` 提取要修改的文件清单，作为审查范围
+3. 调用 Codex 审查代码：
 
 ```
 ~/.claude/bin/codex-call - <<'PROMPT'
@@ -100,30 +110,36 @@ PROMPT
 - 改动摘要在 .design/changeset.md
 - git diff 输出在 .design/diff.txt
 
+审查范围仅限以下文件（来自 design.md 的文件清单）：
+<此处列出文件清单>
+
 要求：
+- 只审查上述范围内的改动，忽略范围外的文件
 - 审查代码质量、安全性、性能、正确性
 - 每个问题标注 P0/P1/P2
 - 如果需要改动，给出具体修改建议
 PROMPT
 ```
 
-3. 处理 Codex 的反馈：
+4. 处理 Codex 的反馈：
    - 逐条修复 P0/P1
    - 将本轮辩论记录追加到 `.design/implementation-debate.md`
-4. 第 2 轮及之后调用 Codex 时，在 prompt 中附上 `.design/implementation-debate.md` 的内容，并加上指令：
+5. **刷新 diff**：修复代码后重新生成 diff（`git diff $BASE_BRANCH...HEAD > .design/diff.txt`），确保下一轮 Codex 审查的是最新代码
+6. 第 2 轮及之后调用 Codex 时，在 prompt 中附上 `.design/implementation-debate.md` 的内容，并加上指令：
 
 > 以下是之前轮次的处理记录。已接受的问题已修复，已拒绝的问题不要重复提出，除非你认为拒绝理由有具体的技术错误并能给出反驳。只关注：1）验证已修复的问题是否真正解决，2）发现新的问题。
 
-5. 收敛判断（满足任一即通过）：
+7. 收敛判断（满足任一即通过）：
    - Codex 返回无新 P0/P1 → 直接通过
    - Codex 只重复了已拒绝的问题且无新的技术反驳 → 视为无新问题，直接通过
-6. 继续下一轮的条件：有新 P0/P1，或对之前拒绝的问题给出了实质性技术反驳
-7. 满 3 轮仍有未解决的 P0/P1 → 停止，告知用户未解决的问题
+8. 继续下一轮的条件：有新 P0/P1，或对之前拒绝的问题给出了实质性技术反驳
+9. 满 3 轮仍有未解决的 P0/P1 → 停止，告知用户未解决的问题
 
 ### 完成
 
-1. 告知用户流程结果，列出 `.design/` 目录下的产物。
-2. 询问用户是否要提交代码（git commit）。如果用户确认，执行 commit。
+1. 如果阶段三有 P0/P1 修复导致接口或架构变更，回溯更新 `.design/design.md`，使其与最终实现一致。
+2. 告知用户流程结果，列出 `.design/` 目录下的产物。
+3. 询问用户是否要提交代码（git commit）。如果用户确认，执行 commit。
 
 ## 需求
 
