@@ -91,12 +91,13 @@ PROMPT
    - 修改/新建的文件清单（必须与实际改动的文件一一对应，不多不少）
    - 风险点
    - 需要人工确认的事项
-   - 注意：写完后用 `git diff --name-only $BASE_BRANCH...HEAD` 交叉验证文件清单的准确性
+   - 注意：实现全部完成后，用 `git diff --name-only $BASE_BRANCH...HEAD` 交叉验证文件清单的准确性（如果尚未 commit，用 `git diff --name-only --cached` 替代）。验证时忽略 `.design/` 目录和构建系统自动生成的文件（如 `.xcodeproj`、`package-lock.json`），只核对源码文件
 
 ### 阶段三：代码审查（最多 3 轮）
 
-1. 获取精确范围的 diff 并保存到文件：
+1. 获取精确范围的 diff 并保存到文件（`diff.txt` 是给 Codex 读的中间产物，不需要入 commit）：
    - 优先：`git diff $BASE_BRANCH...HEAD > .design/diff.txt`（只含本分支改动）
+   - 备选（尚未 commit）：`git diff --cached -- file1 file2 ... > .design/diff.txt`
    - 备选（用户跳过了建分支）：只 diff design.md 中列出的文件 → `git diff -- file1 file2 ... > .design/diff.txt`
 2. 从 `.design/design.md` 提取要修改的文件清单，作为审查范围
 3. 调用 Codex 审查代码：
