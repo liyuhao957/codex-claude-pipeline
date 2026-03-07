@@ -28,26 +28,125 @@ else
     echo "WARN: neither 'timeout' nor 'gtimeout' found; running without timeout" >&2
 fi
 
-# --- Prompt from argument or stdin ---
-if [[ $# -ge 1 && "$1" != "-" ]]; then
-    PROMPT="$1"
-elif [[ ! -t 0 ]]; then
+# --- Parse arguments ---
+SESSION_FILE=""
+RESUME_ID=""
+PROMPT=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --session-file)
+            SESSION_FILE="$2"
+            shift 2
+            ;;
+        --resume)
+            RESUME_ID="$2"
+            shift 2
+            ;;
+        -)
+            shift
+            PROMPT="$(cat)"
+            break
+            ;;
+        -*)
+            echo "ERROR: unknown option: $1" >&2
+            exit 1
+            ;;
+        *)
+            PROMPT="$1"
+            shift
+            break
+            ;;
+    esac
+done
+
+# If no prompt yet and stdin has data
+if [[ -z "$PROMPT" && ! -t 0 ]]; then
     PROMPT="$(cat)"
-else
-    echo "ERROR: no prompt provided" >&2
-    echo "Usage: codex-call \"prompt\" or echo \"prompt\" | codex-call" >&2
-    exit 1
 fi
 
 if [[ -z "$PROMPT" ]]; then
     echo "ERROR: no prompt provided" >&2
-    echo "Usage: codex-call \"prompt\" or echo \"prompt\" | codex-call -" >&2
+    echo "Usage: codex-call [--session-file PATH] [--resume SESSION_ID] \"prompt\"" >&2
+    echo "       echo \"prompt\" | codex-call [--session-file PATH] -" >&2
     exit 1
 fi
 
-# --- Execute codex with read-only sandbox ---
-if [[ -n "$TIMEOUT_CMD" ]]; then
-    exec "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" exec --sandbox read-only "$PROMPT"
+# --- Build codex arguments ---
+CODEX_ARGS=(exec --sandbox read-only)
+
+if [[ -n "$SESSION_FILE" ]]; then
+    CODEX_ARGS+=(--json)
+fi
+
+if [[ -n "$RESUME_ID" ]]; then
+    CODEX_ARGS+=(resume "$RESUME_ID")
+fi
+
+CODEX_ARGS+=("$PROMPT")
+
+# --- Execute ---
+if [[ -z "$SESSION_FILE" ]]; then
+    # Simple mode: no session tracking, plain text output (backward compatible)
+    if [[ -n "$TIMEOUT_CMD" ]]; then
+        exec "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" "${CODEX_ARGS[@]}"
+    else
+        exec "$CODEX_BIN" "${CODEX_ARGS[@]}"
+    fi
 else
-    exec "$CODEX_BIN" exec --sandbox read-only "$PROMPT"
+    # Session mode: JSON output, parse to extract text + session ID
+    TMPFILE="$(mktemp)"
+    trap 'rm -f "$TMPFILE"' EXIT
+
+    EXIT_CODE=0
+    if [[ -n "$TIMEOUT_CMD" ]]; then
+        "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" "${CODEX_ARGS[@]}" > "$TMPFILE" 2>&1 || EXIT_CODE=$?
+    else
+        "$CODEX_BIN" "${CODEX_ARGS[@]}" > "$TMPFILE" 2>&1 || EXIT_CODE=$?
+    fi
+
+    # Parse JSON output with python3 (available on macOS by default)
+    python3 -c "
+import sys, json
+
+text_parts = []
+session_id = ''
+
+for line in open(sys.argv[1]):
+    line = line.strip()
+    if not line:
+        continue
+    try:
+        event = json.loads(line)
+    except (json.JSONDecodeError, ValueError):
+        continue
+
+    # Extract session ID from thread.started event
+    if event.get('type') == 'thread.started':
+        tid = event.get('thread_id', '')
+        if tid:
+            session_id = tid
+
+    # Extract text from item.completed events
+    if event.get('type') == 'item.completed':
+        item = event.get('item', {})
+        if isinstance(item, dict) and item.get('type') == 'agent_message':
+            text = item.get('text', '')
+            if isinstance(text, list):
+                text = ''.join(str(t) for t in text)
+            if text:
+                text_parts.append(str(text))
+
+# Output text to stdout
+if text_parts:
+    print('\n'.join(text_parts))
+
+# Save session ID to file
+if session_id and len(sys.argv) > 2:
+    with open(sys.argv[2], 'w') as f:
+        f.write(session_id)
+    print(f'SESSION_ID: {session_id}', file=sys.stderr)
+" "$TMPFILE" "$SESSION_FILE"
+
+    exit "$EXIT_CODE"
 fi
