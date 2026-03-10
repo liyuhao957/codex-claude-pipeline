@@ -73,6 +73,7 @@
 3. **准备 Codex prompt**：用 Read 工具读取：
    - `~/.claude/prompts/dual-agent/architect.md`（角色 prompt）
    - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
+   - `.claude/codex-context.md`（如果存在，解析 `- ` 开头的行为文件路径，逐一读取。仅首轮发送）
    - `.design/design.md`（设计文档）
 4. 调用 Codex 审查设计（启用 session 以便后续流程复用），将所有内容内联：
 
@@ -84,6 +85,11 @@
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
 </PROJECT>
+
+<CONTEXT>
+此处内联 .claude/codex-context.md 中列出的所有文件内容（如果不存在则省略此标签）
+每个文件用 --- FILE: <路径> --- 分隔
+</CONTEXT>
 
 <DESIGN>
 此处内联 .design/design.md 的完整内容
@@ -103,10 +109,6 @@ PROMPT
 ~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session - <<'PROMPT'
 <architect.md 的内容>
 ---
-
-<PROJECT>
-此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
-</PROJECT>
 
 <DESIGN>
 此处内联更新后的 .design/design.md 完整内容

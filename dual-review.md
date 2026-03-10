@@ -60,6 +60,7 @@
 2. **准备 Codex prompt**：用 Read 工具读取以下所有内容：
    - `~/.claude/prompts/dual-agent/reviewer.md`（角色 prompt）
    - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
+   - `.claude/codex-context.md`（如果存在，解析 `- ` 开头的行为文件路径，逐一读取。仅首轮发送）
    - `.design/diff.txt`（代码 diff，注意大小控制）
    - `.design/design.md`（如果存在，提供设计上下文）
 3. **尝试复用 session**：检查 `.design/.codex-session` 是否存在，如果存在则读取其中的 session ID
@@ -73,6 +74,11 @@
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
 </PROJECT>
+
+<CONTEXT>
+此处内联 .claude/codex-context.md 中列出的所有文件内容（如果不存在则省略此标签）
+每个文件用 --- FILE: <路径> --- 分隔
+</CONTEXT>
 
 <DIFF>
 此处内联 diff 内容（如果超过 500 行，按大小控制规则裁剪）

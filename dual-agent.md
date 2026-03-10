@@ -40,7 +40,12 @@ Bash("~/.claude/bin/codex-call --resume SESSION_ID --session-file .design/.codex
    - 阶段一：`~/.claude/prompts/dual-agent/architect.md`
    - 阶段三：`~/.claude/prompts/dual-agent/reviewer.md`
 2. **读项目上下文**：用 Read 工具读取项目根目录的 `CLAUDE.md`（如果存在）
-3. **读上下文文件**：用 Read 工具读取 Codex 需要审查的所有文件内容（设计文档、diff 等）
+3. **读项目额外上下文**：检查项目根目录是否存在 `.claude/codex-context.md`。如果存在：
+   - 用 Read 工具读取该文件
+   - 解析格式：每行以 `- ` 开头的视为文件路径（忽略标题行、空行、注释行）
+   - 逐一读取每个文件的内容
+   - **仅首轮发送**：CONTEXT 只在每个阶段的首次 Codex 调用中内联。后续轮使用 `--resume` 复用会话，Codex 已有上下文，不再重发
+4. **读上下文文件**：用 Read 工具读取 Codex 需要审查的所有文件内容（设计文档、diff 等）
 
 **关键原则**：不要让 Codex 自己去读文件。所有内容都内联到 prompt 里，用 XML 标签分隔：
 
@@ -51,6 +56,12 @@ Bash("~/.claude/bin/codex-call --resume SESSION_ID --session-file .design/.codex
 <PROJECT>
 项目 CLAUDE.md 的内容（技术栈、目录结构、约定）
 </PROJECT>
+
+<CONTEXT>
+如果项目有 .claude/codex-context.md，此处内联其中列出的所有文件内容。
+每个文件用 --- FILE: <路径> --- 分隔。
+（如果不存在则省略此标签。仅首轮发送，后续轮 resume 已有上下文）
+</CONTEXT>
 
 <DESIGN>
 design.md 的完整内容
@@ -148,6 +159,7 @@ debate 文件（`design-debate.md` 和 `implementation-debate.md`）必须使用
 3. **准备 Codex prompt**：用 Read 工具读取：
    - `~/.claude/prompts/dual-agent/architect.md`（角色 prompt）
    - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
+   - `.claude/codex-context.md`（如果存在，读取其中列出的所有文件）
    - `.design/design.md`（设计文档）
 4. 调用 Codex 审查设计（首次调用启用 session），将所有内容内联：
 
@@ -159,6 +171,11 @@ debate 文件（`design-debate.md` 和 `implementation-debate.md`）必须使用
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
 </PROJECT>
+
+<CONTEXT>
+此处内联 .claude/codex-context.md 中列出的所有文件内容（如果不存在则省略此标签）
+每个文件用 --- FILE: <路径> --- 分隔
+</CONTEXT>
 
 <DESIGN>
 此处内联 .design/design.md 的完整内容
@@ -178,10 +195,6 @@ PROMPT
 ~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session - <<'PROMPT'
 <architect.md 的内容>
 ---
-
-<PROJECT>
-此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
-</PROJECT>
 
 <DESIGN>
 此处内联更新后的 .design/design.md 完整内容
@@ -225,6 +238,7 @@ PROMPT
 3. **准备 Codex prompt**：用 Read 工具读取以下所有内容：
    - `~/.claude/prompts/dual-agent/reviewer.md`（角色 prompt）
    - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
+   - `.claude/codex-context.md`（如果存在，读取其中列出的所有文件）
    - `.design/design.md`（设计文档）
    - `.design/changeset.md`（改动摘要）
    - `.design/diff.txt`（代码 diff，注意大小控制）
@@ -239,6 +253,11 @@ PROMPT
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
 </PROJECT>
+
+<CONTEXT>
+此处内联 .claude/codex-context.md 中列出的所有文件内容（如果不存在则省略此标签）
+每个文件用 --- FILE: <路径> --- 分隔
+</CONTEXT>
 
 <DESIGN>
 此处内联 .design/design.md 的完整内容

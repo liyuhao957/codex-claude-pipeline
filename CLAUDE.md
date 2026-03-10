@@ -28,3 +28,4 @@ docs/               # 规划文档和工作流笔记
 - **Severity levels**: P0 (must fix), P1 (should fix), P2 (nice to have, can skip)
 - **Debate cap**: max 3 rounds per phase; stop and ask user if P0/P1 remain
 - **Artifacts**: all design/review artifacts go in `.design/` directory
+- **Project context**: if project has `.claude/codex-context.md`, listed files (lines starting with `- `) are inlined into first-round Codex prompts under `<CONTEXT>` tag; subsequent rounds rely on session resume
