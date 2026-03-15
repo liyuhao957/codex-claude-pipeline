@@ -15,7 +15,7 @@
 <text x="52" y="562" fill="#3C3489" font-size="13" font-weight="600">阶段 2</text>
 <text x="112" y="562" fill="#534AB7" font-size="13">代码实现</text>
 
-<rect x="30" y="778" width="620" height="430" rx="16" fill="#FAECE7" fill-opacity=".35" stroke="#F0997B" stroke-width=".5" stroke-opacity=".5"/>
+<rect x="30" y="778" width="620" height="340" rx="16" fill="#FAECE7" fill-opacity=".35" stroke="#F0997B" stroke-width=".5" stroke-opacity=".5"/>
 <text x="52" y="802" fill="#712B13" font-size="13" font-weight="600">阶段 3</text>
 <text x="112" y="802" fill="#993C1D" font-size="13">代码审查</text>
 
