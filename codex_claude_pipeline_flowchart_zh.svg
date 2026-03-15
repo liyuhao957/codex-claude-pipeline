@@ -1,217 +1,162 @@
 <svg width="100%" viewBox="0 0 680 1380" xmlns="http://www.w3.org/2000/svg">
 <defs>
-  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="arrow-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="arrow-coral" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#993C1D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <style>
-    text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-  </style>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="at" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="ac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#993C1D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
 
-<!-- ====== PHASE 1 BACKGROUND ====== -->
-<rect x="30" y="88" width="620" height="430" rx="16" fill="#E1F5EE" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5" stroke-opacity="0.5"/>
-<text x="52" y="112" fill="#085041" font-size="13" font-weight="500">阶段 1</text>
-<text x="110" y="112" fill="#0F6E56" font-size="13">设计辩论</text>
+<!-- Phase backgrounds -->
+<rect x="30" y="88" width="620" height="430" rx="16" fill="#E1F5EE" fill-opacity=".35" stroke="#5DCAA5" stroke-width=".5" stroke-opacity=".5"/>
+<text x="52" y="112" fill="#085041" font-size="13" font-weight="600">阶段 1</text>
+<text x="112" y="112" fill="#0F6E56" font-size="13">设计辩论</text>
 
-<!-- ====== PHASE 2 BACKGROUND ====== -->
-<rect x="30" y="538" width="620" height="220" rx="16" fill="#EEEDFE" fill-opacity="0.35" stroke="#AFA9EC" stroke-width="0.5" stroke-opacity="0.5"/>
-<text x="52" y="562" fill="#3C3489" font-size="13" font-weight="500">阶段 2</text>
-<text x="110" y="562" fill="#534AB7" font-size="13">代码实现</text>
+<rect x="30" y="538" width="620" height="220" rx="16" fill="#EEEDFE" fill-opacity=".35" stroke="#AFA9EC" stroke-width=".5" stroke-opacity=".5"/>
+<text x="52" y="562" fill="#3C3489" font-size="13" font-weight="600">阶段 2</text>
+<text x="112" y="562" fill="#534AB7" font-size="13">代码实现</text>
 
-<!-- ====== PHASE 3 BACKGROUND ====== -->
-<rect x="30" y="778" width="620" height="430" rx="16" fill="#FAECE7" fill-opacity="0.35" stroke="#F0997B" stroke-width="0.5" stroke-opacity="0.5"/>
-<text x="52" y="802" fill="#712B13" font-size="13" font-weight="500">阶段 3</text>
-<text x="110" y="802" fill="#993C1D" font-size="13">代码审查</text>
+<rect x="30" y="778" width="620" height="430" rx="16" fill="#FAECE7" fill-opacity=".35" stroke="#F0997B" stroke-width=".5" stroke-opacity=".5"/>
+<text x="52" y="802" fill="#712B13" font-size="13" font-weight="600">阶段 3</text>
+<text x="112" y="802" fill="#993C1D" font-size="13">代码审查</text>
 
-<!-- ====== START NODE ====== -->
-<g>
-  <rect x="155" y="26" width="250" height="44" rx="22" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
-  <text x="280" y="48" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#444441">/dual-agent &lt;需求描述&gt;</text>
+<!-- Start -->
+<rect x="155" y="26" width="250" height="44" rx="22" fill="#F1EFE8" stroke="#5F5E5A" stroke-width=".5"/>
+<text x="280" y="52" text-anchor="middle" font-size="14" font-weight="500" fill="#444441">/dual-agent &lt;需求描述&gt;</text>
+<line x1="280" y1="70" x2="280" y2="126" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P1: Analyze -->
+<rect x="155" y="126" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text x="280" y="145" text-anchor="middle" font-size="14" font-weight="500" fill="#085041">分析项目</text>
+<text x="280" y="163" text-anchor="middle" font-size="11" fill="#0F6E56">阅读代码库、依赖、项目结构</text>
+<line x1="280" y1="174" x2="280" y2="196" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P1: Write design -->
+<rect x="155" y="196" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text x="280" y="215" text-anchor="middle" font-size="14" font-weight="500" fill="#085041">编写 design.md</text>
+<text x="280" y="233" text-anchor="middle" font-size="11" fill="#0F6E56">原文嵌入用户需求</text>
+<line x1="280" y1="244" x2="280" y2="266" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P1: User checkpoint -->
+<rect x="155" y="266" width="250" height="44" rx="8" fill="#E0F2FE" stroke="#2563EB" stroke-width=".5"/>
+<text x="280" y="292" text-anchor="middle" font-size="14" font-weight="500" fill="#1E40AF">用户确认方向</text>
+<line x1="280" y1="310" x2="280" y2="332" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P1: Codex reviews -->
+<rect x="155" y="332" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text x="280" y="351" text-anchor="middle" font-size="14" font-weight="500" fill="#085041">Codex 审查设计</text>
+<text x="280" y="369" text-anchor="middle" font-size="11" fill="#0F6E56">只读沙箱，通过 codex-call 调用</text>
+<line x1="280" y1="380" x2="280" y2="404" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P1: Decision -->
+<rect x="170" y="404" width="220" height="44" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width=".5"/>
+<text x="280" y="430" text-anchor="middle" font-size="13" font-weight="500" fill="#854F0B">存在新的 P0/P1 问题？</text>
+<line x1="280" y1="448" x2="280" y2="522" stroke="#CDCCC6" stroke-width="1" marker-end="url(#a)"/>
+<text x="292" y="472" font-size="11" fill="#639922" font-weight="500">否</text>
+<line x1="390" y1="426" x2="430" y2="426" stroke="#EF9F27" stroke-width="1" marker-end="url(#a)"/>
+<text x="396" y="419" font-size="11" fill="#854F0B" font-weight="500">是</text>
+
+<!-- P1: 3-layer resolution (right) -->
+<rect x="432" y="322" width="200" height="126" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text x="532" y="346" text-anchor="middle" font-size="13" font-weight="500" fill="#085041">三层争议解决</text>
+<line x1="452" y1="358" x2="612" y2="358" stroke="#0F6E56" stroke-width=".3" opacity=".5"/>
+<text x="532" y="378" text-anchor="middle" font-size="11" fill="#0F6E56">[事实] → 运行代码验证</text>
+<text x="532" y="396" text-anchor="middle" font-size="11" fill="#0F6E56">[权衡] → 提交用户决策</text>
+<text x="532" y="414" text-anchor="middle" font-size="11" fill="#0F6E56">[质量] → Claude 自行判断</text>
+<text x="532" y="436" text-anchor="middle" font-size="10" fill="#0F6E56">P0: 最多 3 轮 · P1: 最多 2 轮</text>
+<path d="M632 370 L648 370 L648 356 L405 356" fill="none" stroke="#0F6E56" stroke-width="1" marker-end="url(#at)"/>
+<text x="652" y="366" font-size="9" fill="#0F6E56">↻</text>
+
+<!-- P2: Implement -->
+<rect x="155" y="578" width="250" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width=".5"/>
+<text x="280" y="597" text-anchor="middle" font-size="14" font-weight="500" fill="#3C3489">实现设计方案</text>
+<text x="280" y="615" text-anchor="middle" font-size="11" fill="#534AB7">Claude Code 编写所有代码</text>
+<line x1="280" y1="626" x2="280" y2="648" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P2: Changeset -->
+<rect x="155" y="648" width="250" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width=".5"/>
+<text x="280" y="667" text-anchor="middle" font-size="14" font-weight="500" fill="#3C3489">变更记录 + 测试</text>
+<text x="280" y="685" text-anchor="middle" font-size="11" fill="#534AB7">编写 changeset.md，运行测试</text>
+<line x1="280" y1="696" x2="280" y2="762" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P2: Artifacts (right) -->
+<rect x="432" y="590" width="200" height="86" rx="10" fill="#F5F4F0" stroke="#DDDCD7" stroke-width=".5"/>
+<text x="532" y="614" text-anchor="middle" font-size="12" font-weight="500" fill="#1A1A19">产物保存</text>
+<line x1="452" y1="625" x2="612" y2="625" stroke="#DDDCD7" stroke-width=".3"/>
+<text x="532" y="644" text-anchor="middle" font-size="11" fill="#5F5E5A">.design/design.md</text>
+<text x="532" y="662" text-anchor="middle" font-size="11" fill="#5F5E5A">.design/changeset.md</text>
+<line x1="405" y1="640" x2="430" y2="640" stroke="#BBB" stroke-width="1" stroke-dasharray="4 3"/>
+
+<!-- P3: Generate diff -->
+<rect x="155" y="818" width="250" height="44" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width=".5"/>
+<text x="280" y="844" text-anchor="middle" font-size="14" font-weight="500" fill="#712B13">生成 git diff</text>
+<line x1="280" y1="862" x2="280" y2="884" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P3: Codex reviews code -->
+<rect x="155" y="884" width="250" height="48" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width=".5"/>
+<text x="280" y="903" text-anchor="middle" font-size="14" font-weight="500" fill="#712B13">Codex 审查代码</text>
+<text x="280" y="921" text-anchor="middle" font-size="11" fill="#993C1D">审查实际的 git diff 变更</text>
+<line x1="280" y1="932" x2="280" y2="954" stroke="#73726C" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- P3: Decision -->
+<rect x="170" y="954" width="220" height="44" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width=".5"/>
+<text x="280" y="980" text-anchor="middle" font-size="13" font-weight="500" fill="#854F0B">存在新的 P0/P1 问题？</text>
+<line x1="280" y1="998" x2="280" y2="1070" stroke="#CDCCC6" stroke-width="1" marker-end="url(#a)"/>
+<text x="292" y="1022" font-size="11" fill="#639922" font-weight="500">否</text>
+<line x1="390" y1="976" x2="430" y2="976" stroke="#EF9F27" stroke-width="1" marker-end="url(#a)"/>
+<text x="396" y="969" font-size="11" fill="#854F0B" font-weight="500">是</text>
+
+<!-- P3: Claude Code fixes (right) -->
+<rect x="432" y="872" width="200" height="126" rx="10" fill="#FAECE7" stroke="#993C1D" stroke-width=".5"/>
+<text x="532" y="896" text-anchor="middle" font-size="13" font-weight="500" fill="#712B13">Claude Code 修复</text>
+<line x1="452" y1="908" x2="612" y2="908" stroke="#993C1D" stroke-width=".3" opacity=".5"/>
+<text x="532" y="928" text-anchor="middle" font-size="11" fill="#993C1D">拒绝前先验证</text>
+<text x="532" y="946" text-anchor="middle" font-size="11" fill="#993C1D">保存 Codex 原始输出</text>
+<text x="532" y="964" text-anchor="middle" font-size="11" fill="#993C1D">codex-raw-review-*.md</text>
+<text x="532" y="986" text-anchor="middle" font-size="10" fill="#993C1D">P0: 最多 3 轮 · P1: 最多 2 轮</text>
+<path d="M632 920 L648 920 L648 908 L405 908" fill="none" stroke="#993C1D" stroke-width="1" marker-end="url(#ac)"/>
+<text x="652" y="916" font-size="9" fill="#993C1D">↻</text>
+
+<!-- P3: Auto-convergence (right) -->
+<rect x="432" y="1020" width="200" height="66" rx="10" fill="#F5F4F0" stroke="#DDDCD7" stroke-width=".5"/>
+<text x="532" y="1044" text-anchor="middle" font-size="12" font-weight="500" fill="#1A1A19">自动收敛</text>
+<line x1="452" y1="1055" x2="612" y2="1055" stroke="#DDDCD7" stroke-width=".3"/>
+<text x="532" y="1072" text-anchor="middle" font-size="11" fill="#5F5E5A">无新问题时自动通过</text>
+<text x="532" y="1088" text-anchor="middle" font-size="10" fill="#5F5E5A">或仅重复已拒绝的旧问题</text>
+<line x1="390" y1="976" x2="430" y2="1050" stroke="#BBB" stroke-width="1" stroke-dasharray="4 3"/>
+
+<!-- Done -->
+<rect x="180" y="1070" width="200" height="44" rx="22" fill="#ECFDF5" stroke="#059669" stroke-width=".5"/>
+<text x="280" y="1096" text-anchor="middle" font-size="14" font-weight="500" fill="#065F46">流水线完成</text>
+
+<!-- Severity legend -->
+<text x="55" y="1146" font-size="12" font-weight="500" fill="#1A1A19">严重性分级</text>
+<rect x="55" y="1158" width="10" height="10" rx="2" fill="#E24B4A"/>
+<text x="71" y="1168" font-size="11" fill="#5F5E5A">P0 — 必须修复</text>
+<rect x="195" y="1158" width="10" height="10" rx="2" fill="#EF9F27"/>
+<text x="211" y="1168" font-size="11" fill="#5F5E5A">P1 — 应该修复</text>
+<rect x="345" y="1158" width="10" height="10" rx="2" fill="#B4B2A9"/>
+<text x="361" y="1168" font-size="11" fill="#5F5E5A">P2 — 锦上添花（可跳过）</text>
+
+<!-- Key features -->
+<text x="55" y="1204" font-size="12" font-weight="500" fill="#1A1A19">核心设计原则</text>
+<circle cx="61" cy="1222" r="3" fill="#0F6E56"/>
+<text x="70" y="1226" font-size="11" fill="#5F5E5A">每次 Codex 调用都锚定原始需求</text>
+<circle cx="61" cy="1244" r="3" fill="#0F6E56"/>
+<text x="70" y="1248" font-size="11" fill="#5F5E5A">Codex 只读顾问，Claude Code 负责所有编码</text>
+<circle cx="61" cy="1266" r="3" fill="#0F6E56"/>
+<text x="70" y="1270" font-size="11" fill="#5F5E5A">Codex 原始输出保存，确保审计透明</text>
+<circle cx="61" cy="1288" r="3" fill="#0F6E56"/>
+<text x="70" y="1292" font-size="11" fill="#5F5E5A">验证优先：默认假设 Codex 可能是对的</text>
+
+<!-- Phase legend -->
+<rect x="55" y="1330" width="10" height="10" rx="3" fill="#5DCAA5"/>
+<text x="71" y="1340" font-size="11" fill="#5F5E5A">阶段一：设计</text>
+<rect x="175" y="1330" width="10" height="10" rx="3" fill="#AFA9EC"/>
+<text x="191" y="1340" font-size="11" fill="#5F5E5A">阶段二：实现</text>
+<rect x="295" y="1330" width="10" height="10" rx="3" fill="#F0997B"/>
+<text x="311" y="1340" font-size="11" fill="#5F5E5A">阶段三：审查</text>
+<rect x="415" y="1330" width="10" height="10" rx="3" fill="#EF9F27"/>
+<text x="431" y="1340" font-size="11" fill="#5F5E5A">决策</text>
+
 </g>
-<line x1="280" y1="70" x2="280" y2="126" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P1: ANALYZE ====== -->
-<g>
-  <rect x="155" y="126" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-  <text x="280" y="143" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">分析项目</text>
-  <text x="280" y="162" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">阅读代码库、依赖、项目结构</text>
-</g>
-<line x1="280" y1="174" x2="280" y2="196" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P1: WRITE DESIGN ====== -->
-<g>
-  <rect x="155" y="196" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-  <text x="280" y="213" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">编写 design.md</text>
-  <text x="280" y="232" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">原文嵌入用户需求</text>
-</g>
-<line x1="280" y1="244" x2="280" y2="266" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P1: USER CHECKPOINT ====== -->
-<g>
-  <rect x="155" y="266" width="250" height="44" rx="8" fill="#E0F2FE" stroke="#2563EB" stroke-width="0.5"/>
-  <text x="280" y="288" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1E40AF">用户确认方向</text>
-</g>
-<line x1="280" y1="310" x2="280" y2="332" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P1: CODEX REVIEWS ====== -->
-<g>
-  <rect x="155" y="332" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-  <text x="280" y="349" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">Codex 审查设计</text>
-  <text x="280" y="368" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">只读沙箱，通过 codex-call 调用</text>
-</g>
-<line x1="280" y1="380" x2="280" y2="404" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P1: DECISION ====== -->
-<g>
-  <rect x="170" y="404" width="220" height="44" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
-  <text x="280" y="426" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#854F0B">存在新的 P0 / P1 问题？</text>
-</g>
-
-<!-- No branch -->
-<line x1="280" y1="448" x2="280" y2="522" stroke="#CDCCC6" stroke-width="1" marker-end="url(#arrow)"/>
-<text x="290" y="470" font-size="11" fill="#639922" font-weight="500">否</text>
-
-<!-- Yes branch -->
-<line x1="390" y1="426" x2="430" y2="426" stroke="#EF9F27" stroke-width="1" marker-end="url(#arrow)"/>
-<text x="396" y="418" font-size="11" fill="#854F0B" font-weight="500">是</text>
-
-<!-- ====== P1: RESOLVE BOX ====== -->
-<g>
-  <rect x="432" y="322" width="200" height="126" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-  <text x="532" y="344" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">三层争议解决</text>
-  <line x1="452" y1="358" x2="612" y2="358" stroke="#0F6E56" stroke-width="0.3" opacity="0.5"/>
-  <text x="532" y="378" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">[事实] → 运行代码验证</text>
-  <text x="532" y="398" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">[权衡] → 提交用户决策</text>
-  <text x="532" y="418" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">[质量] → Claude 自行判断</text>
-  <text x="532" y="438" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">P0: 最多 3 轮 · P1: 最多 2 轮</text>
-</g>
-
-<!-- Loop arrow: resolve back to Codex review -->
-<path d="M632 370 L648 370 L648 356 L405 356" fill="none" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow-teal)"/>
-<text x="650" y="346" font-size="10" fill="#0F6E56">↻</text>
-
-<!-- ====== P2: IMPLEMENT ====== -->
-<g>
-  <rect x="155" y="578" width="250" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
-  <text x="280" y="595" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">实现设计方案</text>
-  <text x="280" y="614" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534AB7">Claude Code 编写所有代码</text>
-</g>
-<line x1="280" y1="626" x2="280" y2="648" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P2: CHANGESET + TESTS ====== -->
-<g>
-  <rect x="155" y="648" width="250" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
-  <text x="280" y="665" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">变更记录 + 测试</text>
-  <text x="280" y="684" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534AB7">编写 changeset.md，运行测试</text>
-</g>
-
-<!-- P2 to P3 -->
-<line x1="280" y1="696" x2="280" y2="762" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P2: SIDE ANNOTATION ====== -->
-<g>
-  <rect x="432" y="590" width="200" height="86" rx="10" fill="#F5F4F0" stroke="#DDDCD7" stroke-width="0.5"/>
-  <text x="532" y="612" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#1A1A19">产物保存</text>
-  <line x1="452" y1="624" x2="612" y2="624" stroke="#DDDCD7" stroke-width="0.3"/>
-  <text x="532" y="642" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">.design/design.md</text>
-  <text x="532" y="660" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">.design/changeset.md</text>
-</g>
-<line x1="405" y1="640" x2="430" y2="640" stroke="#BBBBBB" stroke-width="1" stroke-dasharray="4 3"/>
-
-<!-- ====== P3: GEN DIFF ====== -->
-<g>
-  <rect x="155" y="818" width="250" height="44" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
-  <text x="280" y="840" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#712B13">生成 git diff</text>
-</g>
-<line x1="280" y1="862" x2="280" y2="884" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P3: CODEX REVIEWS CODE ====== -->
-<g>
-  <rect x="155" y="884" width="250" height="48" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
-  <text x="280" y="901" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#712B13">Codex 审查代码</text>
-  <text x="280" y="920" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">审查实际的 git diff 变更</text>
-</g>
-<line x1="280" y1="932" x2="280" y2="954" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-<!-- ====== P3: DECISION ====== -->
-<g>
-  <rect x="170" y="954" width="220" height="44" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
-  <text x="280" y="976" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#854F0B">存在新的 P0 / P1 问题？</text>
-</g>
-
-<!-- No branch -->
-<line x1="280" y1="998" x2="280" y2="1070" stroke="#CDCCC6" stroke-width="1" marker-end="url(#arrow)"/>
-<text x="290" y="1020" font-size="11" fill="#639922" font-weight="500">否</text>
-
-<!-- Yes branch -->
-<line x1="390" y1="976" x2="430" y2="976" stroke="#EF9F27" stroke-width="1" marker-end="url(#arrow)"/>
-<text x="396" y="968" font-size="11" fill="#854F0B" font-weight="500">是</text>
-
-<!-- ====== P3: FIX BOX ====== -->
-<g>
-  <rect x="432" y="872" width="200" height="126" rx="10" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
-  <text x="532" y="894" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#712B13">Claude Code 修复</text>
-  <line x1="452" y1="908" x2="612" y2="908" stroke="#993C1D" stroke-width="0.3" opacity="0.5"/>
-  <text x="532" y="928" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">拒绝前先验证</text>
-  <text x="532" y="948" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">保存 Codex 原始输出</text>
-  <text x="532" y="968" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">codex-raw-review-*.md</text>
-  <text x="532" y="988" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">P0: 最多 3 轮 · P1: 最多 2 轮</text>
-</g>
-
-<!-- Loop arrow: fix back to Codex review code -->
-<path d="M632 920 L648 920 L648 908 L405 908" fill="none" stroke="#993C1D" stroke-width="1" marker-end="url(#arrow-coral)"/>
-<text x="650" y="898" font-size="10" fill="#993C1D">↻</text>
-
-<!-- ====== P3: AUTO-CONVERGENCE NOTE ====== -->
-<g>
-  <rect x="432" y="1020" width="200" height="66" rx="10" fill="#F5F4F0" stroke="#DDDCD7" stroke-width="0.5"/>
-  <text x="532" y="1042" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#1A1A19">自动收敛</text>
-  <line x1="452" y1="1054" x2="612" y2="1054" stroke="#DDDCD7" stroke-width="0.3"/>
-  <text x="532" y="1072" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">无新问题时自动通过</text>
-  <text x="532" y="1088" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#5F5E5A">或仅重复已拒绝的旧问题</text>
-</g>
-<line x1="390" y1="976" x2="430" y2="1050" stroke="#BBBBBB" stroke-width="1" stroke-dasharray="4 3"/>
-
-<!-- ====== DONE NODE ====== -->
-<g>
-  <rect x="180" y="1070" width="200" height="44" rx="22" fill="#ECFDF5" stroke="#059669" stroke-width="0.5"/>
-  <text x="280" y="1092" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#065F46">流水线完成</text>
-</g>
-
-<!-- ====== SEVERITY LEGEND ====== -->
-<g transform="translate(60, 1150)">
-  <text font-size="13" font-weight="500" fill="#1A1A19" y="0">严重性分级</text>
-  <rect x="0" y="14" width="10" height="10" rx="2" fill="#E24B4A"/>
-  <text font-size="11" fill="#5F5E5A" x="16" y="24">P0 — 必须修复</text>
-  <rect x="130" y="14" width="10" height="10" rx="2" fill="#EF9F27"/>
-  <text font-size="11" fill="#5F5E5A" x="146" y="24">P1 — 应该修复</text>
-  <rect x="280" y="14" width="10" height="10" rx="2" fill="#B4B2A9"/>
-  <text font-size="11" fill="#5F5E5A" x="296" y="24">P2 — 锦上添花（可跳过）</text>
-</g>
-
-<!-- ====== KEY FEATURES ====== -->
-<g transform="translate(60, 1210)">
-  <text font-size="13" font-weight="500" fill="#1A1A19" y="0">核心设计原则</text>
-  <circle cx="5" cy="18" r="3" fill="#0F6E56"/>
-  <text font-size="11" fill="#5F5E5A" x="14" y="22">每次 Codex 调用都锚定原始需求</text>
-  <circle cx="5" cy="38" r="3" fill="#0F6E56"/>
-  <text font-size="11" fill="#5F5E5A" x="14" y="42">Codex 只读顾问，Claude Code 负责所有编码</text>
-  <circle cx="5" cy="58" r="3" fill="#0F6E56"/>
-  <text font-size="11" fill="#5F5E5A" x="14" y="62">Codex 原始输出保存，确保审计透明</text>
-  <circle cx="5" cy="78" r="3" fill="#0F6E56"/>
-  <text font-size="11" fill="#5F5E5A" x="14" y="82">验证优先：默认假设 Codex 可能是对的</text>
-</g>
-
-<!-- ====== PHASE LEGEND ====== -->
-<g transform="translate(60, 1330)">
-  <rect x="0" y="0" width="10" height="10" rx="3" fill="#5DCAA5"/>
-  <text font-size="11" fill="#5F5E5A" x="16" y="10">阶段一：设计</text>
-  <rect x="130" y="0" width="10" height="10" rx="3" fill="#AFA9EC"/>
-  <text font-size="11" fill="#5F5E5A" x="146" y="10">阶段二：实现</text>
-  <rect x="280" y="0" width="10" height="10" rx="3" fill="#F0997B"/>
-  <text font-size="11" fill="#5F5E5A" x="296" y="10">阶段三：审查</text>
-  <rect x="410" y="0" width="10" height="10" rx="3" fill="#EF9F27"/>
-  <text font-size="11" fill="#5F5E5A" x="426" y="10">决策</text>
-</g>
-
 </svg>
