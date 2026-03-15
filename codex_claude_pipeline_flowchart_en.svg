@@ -1,131 +1,217 @@
-<svg width="100%" viewBox="0 0 680 920" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" viewBox="0 0 680 1380" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-<mask id="imagine-text-gaps-q1ija8" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="680" height="920" fill="white"/><rect x="145.7700653076172" y="41.31911849975586" width="188.4598388671875" height="21.428760528564453" fill="black" rx="2"/><rect x="196.85313415527344" y="103.31912231445312" width="86.29370880126953" height="21.36176109313965" fill="black" rx="2"/><rect x="139.57212829589844" y="124.5248031616211" width="200.855712890625" height="19.014501571655273" fill="black" rx="2"/><rect x="228.75982666015625" y="179.31912231445312" width="238.48040771484375" height="21.428756713867188" fill="black" rx="2"/><rect x="146.63665771484375" y="211.31912231445312" width="186.7266845703125" height="21.428756713867188" fill="black" rx="2"/><rect x="157.44630432128906" y="277.3191223144531" width="165.10736083984375" height="21.36176109313965" fill="black" rx="2"/><rect x="124.09046936035156" y="343.3191223144531" width="231.81903076171875" height="21.428756713867188" fill="black" rx="2"/><rect x="172.02371215820312" y="409.31915283203125" width="135.95256805419922" height="21.36176109313965" fill="black" rx="2"/><rect x="246" y="458.5248107910156" width="65.68415069580078" height="18.950406074523926" fill="black" rx="2"/><rect x="374.02679443359375" y="400.5248107910156" width="27.946434020996094" height="18.950406074523926" fill="black" rx="2"/><rect x="459.2690734863281" y="401.3191223144531" width="121.46183013916016" height="21.36176109313965" fill="black" rx="2"/><rect x="444.6653137207031" y="420.5248107910156" width="150.66937255859375" height="18.950406074523926" fill="black" rx="2"/><rect x="262.56402587890625" y="479.3191223144531" width="170.87200927734375" height="21.361732482910156" fill="black" rx="2"/><rect x="152.2279815673828" y="507.31915283203125" width="175.5440216064453" height="21.36176109313965" fill="black" rx="2"/><rect x="158.55401611328125" y="528.5248413085938" width="162.89193725585938" height="19.014516830444336" fill="black" rx="2"/><rect x="234.37376403808594" y="589.3191528320312" width="227.25253295898438" height="21.36176109313965" fill="black" rx="2"/><rect x="123.95860290527344" y="621.319091796875" width="232.08277893066406" height="21.428756713867188" fill="black" rx="2"/><rect x="172.02371215820312" y="687.3191528320312" width="135.95256805419922" height="21.36176109313965" fill="black" rx="2"/><rect x="246" y="735.5248413085938" width="65.68415069580078" height="18.950406074523926" fill="black" rx="2"/><rect x="374.02679443359375" y="678.5248413085938" width="27.946434020996094" height="18.950406074523926" fill="black" rx="2"/><rect x="437.12982177734375" y="687.3191528320312" width="165.74034118652344" height="21.36176109313965" fill="black" rx="2"/><rect x="149.95603942871094" y="829.3191528320312" width="180.08792114257812" height="21.428756713867188" fill="black" rx="2"/><rect x="12" y="-4.475202798843384" width="81.26000213623047" height="18.950406074523926" fill="black" rx="2"/><rect x="132" y="-4.475202798843384" width="111.08546447753906" height="18.950406074523926" fill="black" rx="2"/><rect x="282.0000305175781" y="-4.475202798843384" width="100.77691650390625" height="18.950406074523926" fill="black" rx="2"/><rect x="422" y="-4.475202798843384" width="87.92140197753906" height="18.950406074523926" fill="black" rx="2"/></mask></defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arrow-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arrow-coral" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#993C1D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  </style>
+</defs>
 
-<!-- Start -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="30" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="52" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">/dual-agent &lt;requirement&gt;</text>
+<!-- ====== PHASE 1 BACKGROUND ====== -->
+<rect x="30" y="88" width="620" height="430" rx="16" fill="#E1F5EE" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5" stroke-opacity="0.5"/>
+<text x="52" y="112" fill="#085041" font-size="13" font-weight="500">PHASE 1</text>
+<text x="110" y="112" fill="#0F6E56" font-size="13">Design debate</text>
+
+<!-- ====== PHASE 2 BACKGROUND ====== -->
+<rect x="30" y="538" width="620" height="220" rx="16" fill="#EEEDFE" fill-opacity="0.35" stroke="#AFA9EC" stroke-width="0.5" stroke-opacity="0.5"/>
+<text x="52" y="562" fill="#3C3489" font-size="13" font-weight="500">PHASE 2</text>
+<text x="110" y="562" fill="#534AB7" font-size="13">Implementation</text>
+
+<!-- ====== PHASE 3 BACKGROUND ====== -->
+<rect x="30" y="778" width="620" height="430" rx="16" fill="#FAECE7" fill-opacity="0.35" stroke="#F0997B" stroke-width="0.5" stroke-opacity="0.5"/>
+<text x="52" y="802" fill="#712B13" font-size="13" font-weight="500">PHASE 3</text>
+<text x="110" y="802" fill="#993C1D" font-size="13">Code review</text>
+
+<!-- ====== START NODE ====== -->
+<g>
+  <rect x="155" y="26" width="250" height="44" rx="22" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="280" y="48" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#444441">/dual-agent &lt;requirement&gt;</text>
 </g>
-<line x1="240" y1="74" x2="240" y2="96" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="280" y1="70" x2="280" y2="126" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-<!-- Prep -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="96" width="260" height="56" rx="8" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="114" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Preparation</text>
-<text x="240" y="134" text-anchor="middle" dominant-baseline="central" style="fill:rgb(95, 94, 90);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Git check · create branch · .design/</text>
+<!-- ====== P1: ANALYZE ====== -->
+<g>
+  <rect x="155" y="126" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="280" y="143" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">Analyze project</text>
+  <text x="280" y="162" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">Read codebase, dependencies, structure</text>
 </g>
-<line x1="240" y1="152" x2="240" y2="195" marker-end="url(#arrow)" mask="url(#imagine-text-gaps-q1ija8)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="280" y1="174" x2="280" y2="196" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-<!-- Phase 1 container -->
-<rect x="55" y="170" width="585" height="295" rx="12" fill="none" stroke="var(--b)" stroke-width="0.5" stroke-dasharray="6 4" style="fill:none;stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-dasharray:6px, 4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="348" y="190" text-anchor="middle" dominant-baseline="central" fill="var(--s)" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Phase 1: design debate (≤3 rounds)</text>
-
-<!-- Claude writes design -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="200" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="222" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Claude Code writes design</text>
+<!-- ====== P1: WRITE DESIGN ====== -->
+<g>
+  <rect x="155" y="196" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="280" y="213" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">Write design.md</text>
+  <text x="280" y="232" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">Embed requirement verbatim</text>
 </g>
-<line x1="240" y1="244" x2="240" y2="266" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="280" y1="244" x2="280" y2="266" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-<!-- User checkpoint -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="266" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="288" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">User confirms direction</text>
+<!-- ====== P1: USER CHECKPOINT ====== -->
+<g>
+  <rect x="155" y="266" width="250" height="44" rx="8" fill="#E0F2FE" stroke="#2563EB" stroke-width="0.5"/>
+  <text x="280" y="288" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1E40AF">User confirms direction</text>
 </g>
-<line x1="240" y1="310" x2="240" y2="332" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="280" y1="310" x2="280" y2="332" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-<!-- Codex review design -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="332" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="354" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Codex reviews design (read-only)</text>
+<!-- ====== P1: CODEX REVIEWS ====== -->
+<g>
+  <rect x="155" y="332" width="250" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="280" y="349" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">Codex reviews design</text>
+  <text x="280" y="368" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">Read-only sandbox, via codex-call</text>
 </g>
-<line x1="240" y1="376" x2="240" y2="398" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="280" y1="380" x2="280" y2="404" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-<!-- Decision P0/P1 -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="398" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="420" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">New P0 / P1 issues?</text>
-</g>
-
-<!-- No arrow down -->
-<line x1="240" y1="442" x2="240" y2="500" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="250" y="468" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:central">No → pass</text>
-
-<!-- Yes arrow right -->
-<line x1="370" y1="420" x2="420" y2="420" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="388" y="410" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Yes</text>
-
-<!-- Dispute resolution box -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="420" y="398" width="200" height="44" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="520" y="412" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Resolve disputes</text>
-<text x="520" y="430" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">[fact] [tradeoff] [quality]</text>
-</g>
-
-<!-- Back loop arrow: dispute → codex review -->
-<path d="M 520 398 L 520 354 L 372 354" fill="none" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-
-<!-- Phase 2 -->
-<text x="348" y="490" text-anchor="middle" dominant-baseline="central" fill="var(--s)" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Phase 2: implementation</text>
-
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="500" width="260" height="56" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="518" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Claude Code implements</text>
-<text x="240" y="538" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Build / test → changeset.md</text>
-</g>
-<line x1="240" y1="556" x2="240" y2="605" marker-end="url(#arrow)" mask="url(#imagine-text-gaps-q1ija8)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-
-<!-- Phase 3 container -->
-<rect x="55" y="580" width="585" height="215" rx="12" fill="none" stroke="var(--b)" stroke-width="0.5" stroke-dasharray="6 4" style="fill:none;stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-dasharray:6px, 4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="348" y="600" text-anchor="middle" dominant-baseline="central" fill="var(--s)" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Phase 3: code review (≤3 rounds)</text>
-
-<!-- Codex review diff -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="610" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="632" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Codex reviews git diff (read-only)</text>
-</g>
-<line x1="240" y1="654" x2="240" y2="676" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-
-<!-- Decision P0/P1 -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="676" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="698" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">New P0 / P1 issues?</text>
+<!-- ====== P1: DECISION ====== -->
+<g>
+  <rect x="170" y="404" width="220" height="44" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
+  <text x="280" y="426" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#854F0B">New P0 / P1 issues?</text>
 </g>
 
-<!-- No arrow down -->
-<line x1="240" y1="720" x2="240" y2="818" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="250" y="745" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:central">No → pass</text>
+<!-- No branch -->
+<line x1="280" y1="448" x2="280" y2="522" stroke="#CDCCC6" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="290" y="470" font-size="11" fill="#639922" font-weight="500">No</text>
 
-<!-- Yes arrow right -->
-<line x1="370" y1="698" x2="420" y2="698" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="388" y="688" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Yes</text>
+<!-- Yes branch -->
+<line x1="390" y1="426" x2="430" y2="426" stroke="#EF9F27" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="396" y="418" font-size="11" fill="#854F0B" font-weight="500">Yes</text>
 
-<!-- Claude fix box -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="420" y="676" width="200" height="44" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="520" y="698" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Claude Code fixes code</text>
+<!-- ====== P1: RESOLVE BOX ====== -->
+<g>
+  <rect x="432" y="322" width="200" height="126" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="532" y="344" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">3-layer resolution</text>
+  <line x1="452" y1="358" x2="612" y2="358" stroke="#0F6E56" stroke-width="0.3" opacity="0.5"/>
+  <text x="532" y="378" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">[fact] &#x2192; verify by running code</text>
+  <text x="532" y="398" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">[tradeoff] &#x2192; surface to user</text>
+  <text x="532" y="418" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">[quality] &#x2192; Claude decides</text>
+  <text x="532" y="438" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0F6E56">P0: max 3 &#x00B7; P1: max 2 rounds</text>
 </g>
 
-<!-- Back loop arrow: fix → codex review diff -->
-<path d="M 520 676 L 520 632 L 372 632" fill="none" marker-end="url(#arrow)" style="fill:none;stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Loop arrow: resolve back to Codex review -->
+<path d="M632 370 L648 370 L648 356 L405 356" fill="none" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow-teal)"/>
+<text x="650" y="346" font-size="10" fill="#0F6E56">&#x21BB;</text>
 
-<!-- Done -->
-<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="110" y="818" width="260" height="44" rx="8" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="240" y="840" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Done · artifacts in .design/</text>
+<!-- ====== P2: IMPLEMENT ====== -->
+<g>
+  <rect x="155" y="578" width="250" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="280" y="595" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">Implement design</text>
+  <text x="280" y="614" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534AB7">Claude Code writes all code</text>
+</g>
+<line x1="280" y1="626" x2="280" y2="648" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ====== P2: CHANGESET + TESTS ====== -->
+<g>
+  <rect x="155" y="648" width="250" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="280" y="665" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">Changeset + tests</text>
+  <text x="280" y="684" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534AB7">Write changeset.md, run tests</text>
 </g>
 
-<!-- Legend -->
-<g transform="translate(68, 885)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
-<rect x="0" y="0" width="10" height="10" rx="2" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="16" y="5" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:central">Claude Code</text>
-<rect x="120" y="0" width="10" height="10" rx="2" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="136" y="5" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:central">Codex (read-only)</text>
-<rect x="270" y="0" width="10" height="10" rx="2" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="286" y="5" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:central">User checkpoint</text>
-<rect x="410" y="0" width="10" height="10" rx="2" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-<text x="426" y="5" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:central">Decision node</text>
+<!-- P2 to P3 -->
+<line x1="280" y1="696" x2="280" y2="762" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ====== P2: SIDE ANNOTATION ====== -->
+<g>
+  <rect x="432" y="590" width="200" height="86" rx="10" fill="#F5F4F0" stroke="#DDDCD7" stroke-width="0.5"/>
+  <text x="532" y="612" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#1A1A19">Artifacts saved</text>
+  <line x1="452" y1="624" x2="612" y2="624" stroke="#DDDCD7" stroke-width="0.3"/>
+  <text x="532" y="642" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">.design/design.md</text>
+  <text x="532" y="660" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">.design/changeset.md</text>
 </g>
+<line x1="405" y1="640" x2="430" y2="640" stroke="#BBBBBB" stroke-width="1" stroke-dasharray="4 3"/>
+
+<!-- ====== P3: GEN DIFF ====== -->
+<g>
+  <rect x="155" y="818" width="250" height="44" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text x="280" y="840" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#712B13">Generate git diff</text>
+</g>
+<line x1="280" y1="862" x2="280" y2="884" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ====== P3: CODEX REVIEWS CODE ====== -->
+<g>
+  <rect x="155" y="884" width="250" height="48" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text x="280" y="901" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#712B13">Codex reviews code</text>
+  <text x="280" y="920" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">Reviews actual git diff changes</text>
+</g>
+<line x1="280" y1="932" x2="280" y2="954" stroke="#73726C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ====== P3: DECISION ====== -->
+<g>
+  <rect x="170" y="954" width="220" height="44" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
+  <text x="280" y="976" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#854F0B">New P0 / P1 issues?</text>
+</g>
+
+<!-- No branch -->
+<line x1="280" y1="998" x2="280" y2="1070" stroke="#CDCCC6" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="290" y="1020" font-size="11" fill="#639922" font-weight="500">No</text>
+
+<!-- Yes branch -->
+<line x1="390" y1="976" x2="430" y2="976" stroke="#EF9F27" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="396" y="968" font-size="11" fill="#854F0B" font-weight="500">Yes</text>
+
+<!-- ====== P3: FIX BOX ====== -->
+<g>
+  <rect x="432" y="872" width="200" height="126" rx="10" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text x="532" y="894" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#712B13">Claude Code fixes</text>
+  <line x1="452" y1="908" x2="612" y2="908" stroke="#993C1D" stroke-width="0.3" opacity="0.5"/>
+  <text x="532" y="928" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">Verify before rejecting</text>
+  <text x="532" y="948" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">Save raw Codex output</text>
+  <text x="532" y="968" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">codex-raw-review-*.md</text>
+  <text x="532" y="988" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993C1D">P0: max 3 &#x00B7; P1: max 2 rounds</text>
+</g>
+
+<!-- Loop arrow: fix back to Codex review code -->
+<path d="M632 920 L648 920 L648 908 L405 908" fill="none" stroke="#993C1D" stroke-width="1" marker-end="url(#arrow-coral)"/>
+<text x="650" y="898" font-size="10" fill="#993C1D">&#x21BB;</text>
+
+<!-- ====== P3: AUTO-CONVERGENCE NOTE ====== -->
+<g>
+  <rect x="432" y="1020" width="200" height="66" rx="10" fill="#F5F4F0" stroke="#DDDCD7" stroke-width="0.5"/>
+  <text x="532" y="1042" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#1A1A19">Auto-convergence</text>
+  <line x1="452" y1="1054" x2="612" y2="1054" stroke="#DDDCD7" stroke-width="0.3"/>
+  <text x="532" y="1072" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#5F5E5A">Pass when no new issues or</text>
+  <text x="532" y="1088" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#5F5E5A">only repeated rejected items</text>
+</g>
+<line x1="390" y1="976" x2="430" y2="1050" stroke="#BBBBBB" stroke-width="1" stroke-dasharray="4 3"/>
+
+<!-- ====== DONE NODE ====== -->
+<g>
+  <rect x="180" y="1070" width="200" height="44" rx="22" fill="#ECFDF5" stroke="#059669" stroke-width="0.5"/>
+  <text x="280" y="1092" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#065F46">Pipeline complete</text>
+</g>
+
+<!-- ====== SEVERITY LEGEND ====== -->
+<g transform="translate(60, 1150)">
+  <text font-size="13" font-weight="500" fill="#1A1A19" y="0">Severity triage</text>
+  <rect x="0" y="14" width="10" height="10" rx="2" fill="#E24B4A"/>
+  <text font-size="11" fill="#5F5E5A" x="16" y="24">P0 &#x2014; must fix</text>
+  <rect x="130" y="14" width="10" height="10" rx="2" fill="#EF9F27"/>
+  <text font-size="11" fill="#5F5E5A" x="146" y="24">P1 &#x2014; should fix</text>
+  <rect x="280" y="14" width="10" height="10" rx="2" fill="#B4B2A9"/>
+  <text font-size="11" fill="#5F5E5A" x="296" y="24">P2 &#x2014; nice to have (skip)</text>
+</g>
+
+<!-- ====== KEY FEATURES ====== -->
+<g transform="translate(60, 1210)">
+  <text font-size="13" font-weight="500" fill="#1A1A19" y="0">Key design principles</text>
+  <circle cx="5" cy="18" r="3" fill="#0F6E56"/>
+  <text font-size="11" fill="#5F5E5A" x="14" y="22">Requirement anchored in every Codex prompt</text>
+  <circle cx="5" cy="38" r="3" fill="#0F6E56"/>
+  <text font-size="11" fill="#5F5E5A" x="14" y="42">Codex is read-only consultant, Claude Code writes all code</text>
+  <circle cx="5" cy="58" r="3" fill="#0F6E56"/>
+  <text font-size="11" fill="#5F5E5A" x="14" y="62">Raw Codex output saved for audit transparency</text>
+  <circle cx="5" cy="78" r="3" fill="#0F6E56"/>
+  <text font-size="11" fill="#5F5E5A" x="14" y="82">Verification-first: assume Codex may be correct</text>
+</g>
+
+<!-- ====== PHASE LEGEND ====== -->
+<g transform="translate(60, 1330)">
+  <rect x="0" y="0" width="10" height="10" rx="3" fill="#5DCAA5"/>
+  <text font-size="11" fill="#5F5E5A" x="16" y="10">Phase 1: Design</text>
+  <rect x="130" y="0" width="10" height="10" rx="3" fill="#AFA9EC"/>
+  <text font-size="11" fill="#5F5E5A" x="146" y="10">Phase 2: Implement</text>
+  <rect x="280" y="0" width="10" height="10" rx="3" fill="#F0997B"/>
+  <text font-size="11" fill="#5F5E5A" x="296" y="10">Phase 3: Review</text>
+  <rect x="410" y="0" width="10" height="10" rx="3" fill="#EF9F27"/>
+  <text font-size="11" fill="#5F5E5A" x="426" y="10">Decision</text>
+</g>
+
 </svg>
