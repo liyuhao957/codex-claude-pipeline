@@ -31,6 +31,7 @@ fi
 # --- Parse arguments ---
 SESSION_FILE=""
 RESUME_ID=""
+SAVE_OUTPUT=""
 PROMPT=""
 
 while [[ $# -gt 0 ]]; do
@@ -41,6 +42,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --resume)
             RESUME_ID="$2"
+            shift 2
+            ;;
+        --save-output)
+            SAVE_OUTPUT="$2"
             shift 2
             ;;
         -)
@@ -67,8 +72,8 @@ fi
 
 if [[ -z "$PROMPT" ]]; then
     echo "ERROR: no prompt provided" >&2
-    echo "Usage: codex-call [--session-file PATH] [--resume SESSION_ID] \"prompt\"" >&2
-    echo "       echo \"prompt\" | codex-call [--session-file PATH] -" >&2
+    echo "Usage: codex-call [--session-file PATH] [--resume SESSION_ID] [--save-output PATH] \"prompt\"" >&2
+    echo "       echo \"prompt\" | codex-call [--session-file PATH] [--save-output PATH] -" >&2
     exit 1
 fi
 
@@ -88,10 +93,19 @@ CODEX_ARGS+=("$PROMPT")
 # --- Execute ---
 if [[ -z "$SESSION_FILE" ]]; then
     # Simple mode: no session tracking, plain text output (backward compatible)
-    if [[ -n "$TIMEOUT_CMD" ]]; then
-        exec "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" "${CODEX_ARGS[@]}"
+    if [[ -n "$SAVE_OUTPUT" ]]; then
+        # Pipe through tee to save output while still printing to stdout
+        if [[ -n "$TIMEOUT_CMD" ]]; then
+            "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" "${CODEX_ARGS[@]}" | tee "$SAVE_OUTPUT"
+        else
+            "$CODEX_BIN" "${CODEX_ARGS[@]}" | tee "$SAVE_OUTPUT"
+        fi
     else
-        exec "$CODEX_BIN" "${CODEX_ARGS[@]}"
+        if [[ -n "$TIMEOUT_CMD" ]]; then
+            exec "$TIMEOUT_CMD" "$TIMEOUT" "$CODEX_BIN" "${CODEX_ARGS[@]}"
+        else
+            exec "$CODEX_BIN" "${CODEX_ARGS[@]}"
+        fi
     fi
 else
     # Session mode: JSON output, parse to extract text + session ID
@@ -138,15 +152,21 @@ for line in open(sys.argv[1]):
                 text_parts.append(str(text))
 
 # Output text to stdout
-if text_parts:
-    print('\n'.join(text_parts))
+output_text = '\n'.join(text_parts) if text_parts else ''
+if output_text:
+    print(output_text)
 
 # Save session ID to file
 if session_id and len(sys.argv) > 2:
     with open(sys.argv[2], 'w') as f:
         f.write(session_id)
     print(f'SESSION_ID: {session_id}', file=sys.stderr)
-" "$TMPFILE" "$SESSION_FILE"
+
+# Save output to file if requested
+if len(sys.argv) > 3 and sys.argv[3] and output_text:
+    with open(sys.argv[3], 'w') as f:
+        f.write(output_text)
+" "$TMPFILE" "$SESSION_FILE" "$SAVE_OUTPUT"
 
     exit "$EXIT_CODE"
 fi

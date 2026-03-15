@@ -24,11 +24,11 @@ Bash("~/.claude/bin/codex-call - <<'PROMPT'\nyour long prompt here\nPROMPT")
 **Session 模式**（启用会话复用）：
 
 ```
-Bash("~/.claude/bin/codex-call --session-file .design/.codex-session - <<'PROMPT'\nyour prompt\nPROMPT")
+Bash("~/.claude/bin/codex-call --session-file .design/.codex-session --save-output .design/codex-raw-design-1.md - <<'PROMPT'\nyour prompt\nPROMPT")
 ```
 
 ```
-Bash("~/.claude/bin/codex-call --resume SESSION_ID --session-file .design/.codex-session - <<'PROMPT'\nyour prompt\nPROMPT")
+Bash("~/.claude/bin/codex-call --resume SESSION_ID --session-file .design/.codex-session --save-output .design/codex-raw-design-2.md - <<'PROMPT'\nyour prompt\nPROMPT")
 ```
 
 超时默认 600 秒。如果超时，告知用户并询问是否重试。
@@ -52,6 +52,10 @@ Bash("~/.claude/bin/codex-call --resume SESSION_ID --session-file .design/.codex
 ```
 <角色 prompt 内容>
 ---
+
+<REQUIREMENT>
+用户的原始需求原文（必须逐字引用 $ARGUMENTS，不得修改或概括）
+</REQUIREMENT>
 
 <PROJECT>
 项目 CLAUDE.md 的内容（技术栈、目录结构、约定）
@@ -79,37 +83,69 @@ design.md 的完整内容
 - 只内联单文件 diff 不超过 100 行的文件
 - 超过 100 行的文件只内联前 50 行 + 末尾 20 行，中间用 `... (省略 N 行，请自行读取源文件) ...` 标记
 
-## 辩论规则
+## 分歧解决机制
 
-- Codex 返回的 **P0**（必须修复）和 **P1**（应当修复）问题，你必须逐条处理：
-  - 接受并修复，或
-  - 给出明确的技术理由说明为什么不改
-  - **不能默默跳过**
-- **P2**（建议改进）：可酌情忽略
-- 每轮处理结果按**结构化格式**记录到对应的 debate 文件（见下方格式）
-- 更新 `.design/` 文件时优先用 Edit 工具做增量修改，避免 Write 覆盖整文件
+处理 Codex 的每条 P0/P1 时，**根据 Codex 标注的问题类型分层处理**：
 
-### 辩论记录格式
+### 事实类分歧 `[事实]`
 
-debate 文件（`design-debate.md` 和 `implementation-debate.md`）必须使用以下表格格式：
+Codex 说某个 API、语法、运行时行为和你的理解不同时：
+
+1. **不要靠"我觉得"来判断**——去验证
+2. 验证方式（任选）：
+   - 写一段最小测试代码跑一下
+   - 查框架/库的官方文档
+   - 检查项目中现有的同类用法
+3. 验证后：
+   - Codex 对了 → `fixed`，写明验证过程
+   - Codex 错了 → `rejected`，写明验证过程和结果
+
+### 取舍类分歧 `[取舍]`
+
+两种方案都能工作，但有不同的取舍时：
+
+1. **翻译成用户能理解的语言**：不要说技术术语，说利弊
+   - 例：不要说"建议用 ReadWriteLock 替代 synchronized"
+   - 而是说"方案 A 简单但高并发下可能卡顿，方案 B 更复杂但扛得住大流量，你更在意哪个？"
+2. 如果取舍很小（影响不大）→ Claude 自行选保守方案，记录理由
+3. 如果取舍很大（架构级别）→ 标记为 `deferred`，呈现给用户决定
+
+### 质量类建议 `[质量]`
+
+代码风格、可维护性等建议：
+
+1. Claude 自行判断，接受或拒绝并给出理由
+2. 不需要验证或问用户
+
+## 心态切换
+
+**重要**：处理 Codex 反馈时，切换到验证者心态。
+
+- 默认假设 Codex 可能是对的，你的任务是**验证**而非反驳
+- 对于事实性断言，先去查证再下结论
+- 如果验证后 Codex 确实错了，把验证过程写出来
+- **"我觉得不对"不是有效的 reject 理由**——必须有具体依据
+
+## 辩论记录格式
+
+debate 文件（`design-debate.md` 和 `implementation-debate.md`）使用以下表格格式：
 
 ```markdown
 ## 轮次 1
 
-| ID | 级别 | 问题 | 状态 | 处理说明 |
-|----|------|------|------|----------|
-| D-1 | P0 | 缺少鉴权检查 | fixed | 已在 design.md 补充鉴权方案 |
-| D-2 | P1 | 缓存策略未说明 | rejected | 当前规模无需缓存，理由：... |
-| D-3 | P2 | 建议加监控 | skipped | — |
-
-## 轮次 2
-
-| ID | 级别 | 问题 | 状态 | 处理说明 |
-|----|------|------|------|----------|
-| D-4 | P1 | 新发现：并发写入风险 | fixed | 已补充事务处理 |
+| ID | 类型 | 级别 | 问题 | 状态 | 处理说明 |
+|----|------|------|------|------|----------|
+| D-1 | 事实 | P0 | API 参数顺序错误 | fixed | 经测试验证 Codex 正确，已修正 |
+| D-2 | 取舍 | P1 | 建议用 WebSocket 替代 SSE | deferred | 已翻译为取舍问用户，用户选 SSE |
+| D-3 | 事实 | P1 | 认为 fs.readFile 是同步的 | rejected | 经查 Node.js 文档确认是异步的 |
+| D-4 | 质量 | P2 | 建议拆分函数 | skipped | — |
 ```
 
-状态只有三种：`fixed`（已修复）、`rejected`（已拒绝并给出理由）、`skipped`（P2 跳过）。
+状态有四种：
+- `fixed` — 已修复
+- `rejected` — 不修改（必须附验证过程或具体技术理由）
+- `deferred` — 提交给用户决定（需求分歧或重大取舍）
+- `skipped` — P2 跳过
 
 ## 流程
 
@@ -125,13 +161,16 @@ debate 文件（`design-debate.md` 和 `implementation-debate.md`）必须使用
 4. 清理并创建 `.design/` 目录（`rm -rf .design && mkdir -p .design`）
 5. 告知用户："开始三阶段双 Agent 协作流程（分支：feat/xxx，基准：BASE_BRANCH）"
 
-### 阶段一：设计辩论（最多 3 轮）
+### 阶段一：设计辩论
 
 1. 分析当前项目结构和代码，理解需求上下文
 2. 按以下固定模板写设计文档到 `.design/design.md`：
 
 ```markdown
 # 设计文档：<需求简述>
+
+## 原始需求
+> <逐字引用 $ARGUMENTS>
 
 ## 目标
 - <要达成什么>
@@ -156,17 +195,25 @@ debate 文件（`design-debate.md` 和 `implementation-debate.md`）必须使用
 | <异常/边界场景> | <如何处理> |
 ```
 
-3. **准备 Codex prompt**：用 Read 工具读取：
+3. **需求自检**：逐条对照原始需求（`$ARGUMENTS`）检查设计文档：
+   - 需求中的每个要点是否都在设计中有对应？
+   - 设计中是否有超出需求范围的内容？如果有，标注为"额外改动"并说明理由
+4. **用户检查点**：向用户展示设计文档摘要（目标、方案概述、文件清单），询问："方向对吗？确认后我发给 Codex 审查。"等待用户确认后再继续。
+5. **准备 Codex prompt**：用 Read 工具读取：
    - `~/.claude/prompts/dual-agent/architect.md`（角色 prompt）
    - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
    - `.claude/codex-context.md`（如果存在，读取其中列出的所有文件）
    - `.design/design.md`（设计文档）
-4. 调用 Codex 审查设计（首次调用启用 session），将所有内容内联：
+6. 调用 Codex 审查设计（首次调用启用 session + 保存原始输出），将所有内容内联：
 
 ```
-~/.claude/bin/codex-call --session-file .design/.codex-session - <<'PROMPT'
+~/.claude/bin/codex-call --session-file .design/.codex-session --save-output .design/codex-raw-design-1.md - <<'PROMPT'
 <architect.md 的内容>
 ---
+
+<REQUIREMENT>
+此处逐字引用用户原始需求
+</REQUIREMENT>
 
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
@@ -185,16 +232,22 @@ debate 文件（`design-debate.md` 和 `implementation-debate.md`）必须使用
 PROMPT
 ```
 
-5. 处理 Codex 的反馈：
-   - 逐条处理 P0/P1（修复或反驳）
+7. 处理 Codex 的反馈（**注意心态切换**——默认假设 Codex 可能是对的）：
+   - 按"分歧解决机制"分类处理每条 P0/P1
+   - 如果 Codex 的建议会改变需求范围 → 标记 `deferred`，翻译后呈现给用户决定
    - 更新 `.design/design.md`
    - 按结构化表格格式将本轮结果追加到 `.design/design-debate.md`
-6. 第 2 轮及之后：读取 `.design/.codex-session` 获取 session ID，使用 `--resume` 复用会话。用 Read 工具读取更新后的 `.design/design.md` 和 `.design/design-debate.md`，全部内联到 prompt 中：
+   - 告知用户 Codex 原始输出已保存到 `.design/codex-raw-design-N.md`
+8. 第 2 轮及之后：读取 `.design/.codex-session` 获取 session ID，使用 `--resume` 复用会话。用 Read 工具读取更新后的 `.design/design.md` 和 `.design/design-debate.md`，全部内联：
 
 ```
-~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session - <<'PROMPT'
+~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session --save-output .design/codex-raw-design-N.md - <<'PROMPT'
 <architect.md 的内容>
 ---
+
+<REQUIREMENT>
+此处逐字引用用户原始需求
+</REQUIREMENT>
 
 <DESIGN>
 此处内联更新后的 .design/design.md 完整内容
@@ -210,11 +263,13 @@ PROMPT
 PROMPT
 ```
 
-7. 收敛判断（满足任一即通过，进入阶段二）：
-   - Codex 返回无新 P0/P1 → 直接通过
+9. **自适应轮次与收敛判断**：
+   - Codex 返回无新 P0/P1 → 直接通过，进入阶段二
    - Codex 只重复了已 rejected 的问题且无新的技术反驳 → 视为无新问题，直接通过
-8. 继续下一轮的条件：有新 P0/P1，或对之前 rejected 的问题给出了实质性技术反驳
-9. 满 3 轮仍有未解决的 P0/P1 → 停止，告知用户未解决的问题，询问是否继续
+   - 有新 P0 → 继续下一轮（最多 3 轮）
+   - 只有新 P1（无 P0）→ 继续下一轮（最多 2 轮）
+   - 剩余问题全是取舍类且已 deferred → 直接通过
+   - 达到轮次上限仍有未解决的 P0/P1 → 停止，告知用户未解决的问题，询问是否继续
 
 ### 阶段二：实现
 
@@ -227,7 +282,7 @@ PROMPT
    - 需要人工确认的事项
    - 注意：实现全部完成后，用 `git diff --name-only $BASE_BRANCH...HEAD` 交叉验证文件清单的准确性（如果尚未 commit，用 `git diff --name-only --cached` 替代）。验证时忽略 `.design/` 目录和构建系统自动生成的文件（如 `.xcodeproj`、`package-lock.json`），只核对源码文件
 
-### 阶段三：代码审查（最多 3 轮）
+### 阶段三：代码审查
 
 1. 获取精确范围的 diff 并保存到文件：
    - 优先：`git diff $BASE_BRANCH...HEAD > .design/diff.txt`（只含本分支改动）
@@ -246,9 +301,13 @@ PROMPT
 5. 调用 Codex 审查代码，将所有内容内联（diff 按大小控制规则处理）：
 
 ```
-~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session - <<'PROMPT'
+~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session --save-output .design/codex-raw-review-1.md - <<'PROMPT'
 <reviewer.md 的内容>
 ---
+
+<REQUIREMENT>
+此处逐字引用用户原始需求
+</REQUIREMENT>
 
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
@@ -278,16 +337,21 @@ PROMPT
 PROMPT
 ```
 
-6. 处理 Codex 的反馈：
-   - 逐条修复 P0/P1
+6. 处理 Codex 的反馈（**注意心态切换**）：
+   - 按"分歧解决机制"分类处理每条 P0/P1
    - 按结构化表格格式将本轮结果追加到 `.design/implementation-debate.md`
+   - 告知用户 Codex 原始输出已保存到 `.design/codex-raw-review-N.md`
 7. **刷新 diff**：修复代码后重新生成 diff（`git diff $BASE_BRANCH...HEAD > .design/diff.txt`），确保下一轮 Codex 审查的是最新代码
 8. 第 2 轮及之后：继续使用 `--resume` 复用会话。用 Read 工具重新读取最新的 `.design/diff.txt` 和 `.design/implementation-debate.md`，全部内联：
 
 ```
-~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session - <<'PROMPT'
+~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session --save-output .design/codex-raw-review-N.md - <<'PROMPT'
 <reviewer.md 的内容>
 ---
+
+<REQUIREMENT>
+此处逐字引用用户原始需求
+</REQUIREMENT>
 
 <DIFF>
 此处内联最新的 diff 内容（按大小控制规则处理）
@@ -303,16 +367,20 @@ PROMPT
 PROMPT
 ```
 
-9. 收敛判断（满足任一即通过）：
+9. **自适应轮次与收敛判断**：
    - Codex 返回无新 P0/P1 → 直接通过
    - Codex 只重复了已 rejected 的问题且无新的技术反驳 → 视为无新问题，直接通过
-10. 继续下一轮的条件：有新 P0/P1，或对之前 rejected 的问题给出了实质性技术反驳
-11. 满 3 轮仍有未解决的 P0/P1 → 停止，告知用户未解决的问题
+   - 有新 P0 → 继续下一轮（最多 3 轮）
+   - 只有新 P1（无 P0）→ 继续下一轮（最多 2 轮）
+   - 剩余问题全是取舍类且已 deferred → 直接通过
+   - 达到轮次上限仍有未解决的 P0/P1 → 停止，告知用户未解决的问题
 
 ### 完成
 
 1. 如果阶段三有 P0/P1 修复导致接口或架构变更，回溯更新 `.design/design.md`，使其与最终实现一致。
-2. 告知用户流程结果，列出 `.design/` 目录下的产物。
+2. 告知用户流程结果，列出 `.design/` 目录下的产物，特别提示：
+   - `codex-raw-*.md` 文件包含 Codex 的原始输出，可随时审计
+   - 标注为 `deferred` 的问题（如果有）需要用户后续关注
 3. 询问用户是否要提交代码（git commit）。如果用户确认，执行 commit。
 
 ## 需求

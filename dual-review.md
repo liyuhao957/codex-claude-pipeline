@@ -7,29 +7,33 @@
 - **你（Claude Code）**：决策者 + 唯一代码修改者。你负责修复审查发现的问题。
 - **Codex**：只读顾问。通过 `~/.claude/bin/codex-call` 调用。Codex 可以读项目文件但不能写。它的输出是建议，你来决定如何采纳。
 
-## 辩论规则
+## 分歧解决机制
 
-- Codex 返回的 **P0**（必须修复）和 **P1**（应当修复）问题，你必须逐条处理：
-  - 接受并修复，或
-  - 给出明确的技术理由说明为什么不改
-  - **不能默默跳过**
-- **P2**（建议改进）：可酌情忽略
-- 每轮处理结果按**结构化表格格式**记录到 `.design/implementation-debate.md`
-- 更新文件时优先用 Edit 工具做增量修改
+处理 Codex 的每条 P0/P1 时，**根据 Codex 标注的问题类型分层处理**：
 
-### 辩论记录格式
+| 类型 | 处理方式 |
+|------|----------|
+| `[事实]` | **必须验证**：写测试代码、查文档、检查项目现有用法。验证后 fixed 或 rejected（附验证过程） |
+| `[取舍]` | **翻译取舍**：小取舍 Claude 选保守方案并说明理由；大取舍标记 `deferred` 让用户决定 |
+| `[质量]` | Claude 自行判断，接受或拒绝并给出理由 |
+
+## 心态切换
+
+**重要**：处理 Codex 反馈时，切换到验证者心态。默认假设 Codex 可能是对的，你的任务是**验证**而非反驳。"我觉得不对"不是有效的 reject 理由——必须有具体依据。
+
+## 辩论记录格式
 
 ```markdown
 ## 轮次 1
 
-| ID | 级别 | 问题 | 状态 | 处理说明 |
-|----|------|------|------|----------|
-| R-1 | P0 | 问题描述 | fixed | 如何修复 |
-| R-2 | P1 | 问题描述 | rejected | 拒绝理由 |
-| R-3 | P2 | 问题描述 | skipped | — |
+| ID | 类型 | 级别 | 问题 | 状态 | 处理说明 |
+|----|------|------|------|------|----------|
+| R-1 | 事实 | P0 | 问题描述 | fixed | 经验证确认，如何修复 |
+| R-2 | 取舍 | P1 | 问题描述 | deferred | 已翻译取舍问用户 |
+| R-3 | 质量 | P2 | 问题描述 | skipped | — |
 ```
 
-状态只有三种：`fixed`、`rejected`、`skipped`。
+状态有四种：`fixed`、`rejected`（附验证过程或理由）、`deferred`（提交用户）、`skipped`。
 
 ## Diff 大小控制
 
@@ -52,7 +56,7 @@
 5. 获取 diff 行数：`wc -l < .design/diff.txt`，记录到变量 `DIFF_LINES`
 6. 告知用户："开始代码审查（审查范围：xxx，diff 共 N 行）"
 
-### 代码审查（最多 3 轮）
+### 代码审查
 
 1. 确定审查文件范围：
    - 如果存在 `.design/design.md` → 从中提取文件清单
@@ -67,9 +71,13 @@
 4. 调用 Codex 审查代码，将所有内容内联（diff 按大小控制规则处理）：
 
 ```
-~/.claude/bin/codex-call [--resume <SESSION_ID>] --session-file .design/.codex-session - <<'PROMPT'
+~/.claude/bin/codex-call [--resume <SESSION_ID>] --session-file .design/.codex-session --save-output .design/codex-raw-review-1.md - <<'PROMPT'
 <reviewer.md 的内容>
 ---
+
+<REQUIREMENT>
+此处逐字引用用户原始需求（如果有 $ARGUMENTS）
+</REQUIREMENT>
 
 <PROJECT>
 此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
@@ -91,16 +99,21 @@
 PROMPT
 ```
 
-5. 处理 Codex 的反馈：
-   - 逐条修复 P0/P1
+5. 处理 Codex 的反馈（**注意心态切换**）：
+   - 按"分歧解决机制"分类处理每条 P0/P1
    - 按结构化表格格式将本轮结果追加到 `.design/implementation-debate.md`
+   - 告知用户 Codex 原始输出已保存到 `.design/codex-raw-review-N.md`
 6. **刷新 diff**：修复代码后重新生成 diff，确保下一轮 Codex 审查的是最新代码
-7. 第 2 轮及之后：继续使用 `--resume` 复用会话。用 Read 工具重新读取最新的 `.design/diff.txt` 和 `.design/implementation-debate.md`，全部内联：
+7. 第 2 轮及之后：继续使用 `--resume` 复用会话：
 
 ```
-~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session - <<'PROMPT'
+~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session --save-output .design/codex-raw-review-N.md - <<'PROMPT'
 <reviewer.md 的内容>
 ---
+
+<REQUIREMENT>
+此处逐字引用用户原始需求（如果有 $ARGUMENTS）
+</REQUIREMENT>
 
 <DIFF>
 此处内联最新的 diff 内容（按大小控制规则处理）
@@ -116,17 +129,20 @@ PROMPT
 PROMPT
 ```
 
-8. 收敛判断（满足任一即通过）：
+8. **自适应轮次与收敛判断**：
    - Codex 返回无新 P0/P1 → 直接通过
-   - Codex 只重复了已 rejected 的问题且无新的技术反驳 → 视为无新问题，直接通过
-9. 继续下一轮的条件：有新 P0/P1，或对之前 rejected 的问题给出了实质性技术反驳
-10. 满 3 轮仍有未解决的 P0/P1 → 停止，告知用户未解决的问题
+   - Codex 只重复了已 rejected 的问题且无新的技术反驳 → 直接通过
+   - 有新 P0 → 继续（最多 3 轮）
+   - 只有新 P1 → 继续（最多 2 轮）
+   - 剩余问题全是取舍类且已 deferred → 直接通过
+   - 达到上限仍有未解决的 P0/P1 → 停止，告知用户
 
 ### 完成
 
 1. 告知用户审查结果，列出产物：
    - `.design/diff.txt` — 审查的 diff
    - `.design/implementation-debate.md` — 辩论记录
+   - `.design/codex-raw-*.md` — Codex 原始输出（可审计）
 2. 如果有代码修复，询问用户是否要提交代码（git commit）。
 
 ## 需求
