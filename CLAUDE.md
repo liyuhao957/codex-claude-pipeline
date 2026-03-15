@@ -31,7 +31,7 @@ Claude Code + Codex 双 Agent 协作系统。通过 slash command 驱动，Claud
 **核心约束**：
 - Codex 始终 `--sandbox read-only`，不能写文件
 - Claude Code 是唯一的代码编写者
-- 所有传给 Codex 的内容必须内联到 prompt 中（Codex 不自己读文件）
+- 通过 `codex-call --file` 传递文件路径，让 Codex 在只读沙箱中自行读取文件内容（不内联到 prompt 中）
 
 **三阶段流程**（`dual-agent.md`）：
 1. 设计辩论 — Claude 写 design.md → Codex 审查 → 迭代修复
@@ -44,7 +44,8 @@ Claude Code + Codex 双 Agent 协作系统。通过 slash command 驱动，Claud
 - `[质量]` 类问题 → Claude 自行判断
 
 **codex-call**（Bash wrapper）：
-- 解析 `--session-file`（session 复用）、`--resume`（续接会话）、`--save-output`（原始输出存档）
+- 解析 `--file`（文件路径引用，可重复）、`--session-file`（session 复用）、`--resume`（续接会话）、`--save-output`（原始输出存档）
+- `--file` 将文件路径列表注入到 prompt 开头，指示 Codex 自行读取
 - 简单模式直接 exec codex；session 模式用 python3 解析 JSON 事件流提取文本和 session ID
 - 超时通过 `timeout`/`gtimeout` 实现，macOS 默认无 `timeout` 需 fallback
 
@@ -61,4 +62,4 @@ Claude Code + Codex 双 Agent 协作系统。通过 slash command 驱动，Claud
 - 自适应轮次：无 P0/P1 一轮即过；有 P0 最多 3 轮；只有 P1 最多 2 轮
 - 辩论记录状态：`fixed` / `rejected`（附验证过程）/ `deferred`（交用户）/ `skipped`
 - 运行时产物全部在 `.design/` 目录，包括 `codex-raw-*.md`（Codex 原始输出，可审计）
-- 项目可通过 `.claude/codex-context.md` 声明额外上下文文件，首轮内联到 Codex prompt
+- 项目可通过 `.claude/codex-context.md` 声明额外上下文文件，首轮通过 `--file` 传递给 Codex

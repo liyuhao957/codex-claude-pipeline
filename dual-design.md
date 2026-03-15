@@ -80,36 +80,27 @@
 
 3. **需求自检**：逐条对照原始需求检查设计文档——每个要点是否有对应？是否有超出范围的内容？
 4. **用户检查点**：向用户展示设计文档摘要（目标、方案概述、文件清单），询问："方向对吗？确认后我发给 Codex 审查。"等待用户确认。
-5. **准备 Codex prompt**：用 Read 工具读取：
+5. **确定 Codex 文件列表**：确认以下文件是否存在（不需要读取内容）：
    - `~/.claude/prompts/dual-agent/architect.md`（角色 prompt）
-   - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
-   - `.claude/codex-context.md`（如果存在，解析 `- ` 开头的行为文件路径，逐一读取。仅首轮发送）
+   - 项目根目录的 `CLAUDE.md`（如果存在）
+   - `.claude/codex-context.md`（如果存在，用 Read 读取 manifest，解析出文件路径列表。仅首轮传递）
    - `.design/design.md`（设计文档）
-6. 调用 Codex 审查设计（启用 session + 保存原始输出），将所有内容内联：
+6. 调用 Codex 审查设计（启用 session + 保存原始输出），通过 `--file` 传递文件：
 
 ```
-~/.claude/bin/codex-call --session-file .design/.codex-session --save-output .design/codex-raw-design-1.md - <<'PROMPT'
-<architect.md 的内容>
----
-
+~/.claude/bin/codex-call \
+  --file ~/.claude/prompts/dual-agent/architect.md \
+  --file CLAUDE.md \
+  --file .design/design.md \
+  <如果有 codex-context.md 中的文件，每个加 --file> \
+  --session-file .design/.codex-session \
+  --save-output .design/codex-raw-design-1.md \
+  - <<'PROMPT'
 <REQUIREMENT>
 此处逐字引用用户原始需求
 </REQUIREMENT>
 
-<PROJECT>
-此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
-</PROJECT>
-
-<CONTEXT>
-此处内联 .claude/codex-context.md 中列出的所有文件内容（如果不存在则省略此标签）
-每个文件用 --- FILE: <路径> --- 分隔
-</CONTEXT>
-
-<DESIGN>
-此处内联 .design/design.md 的完整内容
-</DESIGN>
-
-审查以上设计文档。按照角色要求输出审查结论。
+审查 design.md 中的设计方案。按照 architect.md 中定义的角色要求和检查清单输出审查结论。
 PROMPT
 ```
 
@@ -122,25 +113,21 @@ PROMPT
 8. 第 2 轮及之后：读取 `.design/.codex-session` 获取 session ID，使用 `--resume` 复用会话：
 
 ```
-~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session --save-output .design/codex-raw-design-N.md - <<'PROMPT'
-<architect.md 的内容>
----
-
+~/.claude/bin/codex-call \
+  --file ~/.claude/prompts/dual-agent/architect.md \
+  --file .design/design.md \
+  --file .design/design-debate.md \
+  --resume <SESSION_ID> \
+  --session-file .design/.codex-session \
+  --save-output .design/codex-raw-design-N.md \
+  - <<'PROMPT'
 <REQUIREMENT>
 此处逐字引用用户原始需求
 </REQUIREMENT>
 
-<DESIGN>
-此处内联更新后的 .design/design.md 完整内容
-</DESIGN>
+以上是之前轮次的处理记录（见 design-debate.md）。状态为 fixed 的问题已修复，状态为 rejected 的问题不要重复提出，除非你认为拒绝理由有具体的技术错误并能给出反驳。只关注：1）验证 fixed 问题是否真正解决，2）发现新的问题。
 
-<DEBATE_HISTORY>
-此处内联 .design/design-debate.md 完整内容
-</DEBATE_HISTORY>
-
-以上是之前轮次的处理记录。状态为 fixed 的问题已修复，状态为 rejected 的问题不要重复提出，除非你认为拒绝理由有具体的技术错误并能给出反驳。只关注：1）验证 fixed 问题是否真正解决，2）发现新的问题。
-
-审查以上设计文档。按照角色要求输出审查结论。
+审查更新后的 design.md。按照角色要求输出审查结论。
 PROMPT
 ```
 

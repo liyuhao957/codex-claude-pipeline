@@ -21,6 +21,8 @@ Phase 3 — Code Review (adaptive rounds)
 
 No external orchestrator needed. Claude Code drives the entire flow from inside its own session using a slash command template.
 
+![Workflow Flowchart](./codex_claude_pipeline_flowchart_en.svg)
+
 ## Install
 
 ```bash
@@ -93,7 +95,7 @@ The slash command template (`dual-agent.md`) instructs Claude Code to follow a s
 2. **Implementation** — Claude Code implements the approved design and writes `.design/changeset.md`.
 3. **Code review** — Claude Code generates a diff and calls Codex to review the actual code changes. Same classification and resolution rules apply. Adaptive rounds.
 
-`codex-call` is a Bash wrapper that resolves the Codex binary, enforces a timeout (default 600s, configurable via `CODEX_TIMEOUT`), supports session reuse (`--session-file` / `--resume`), and saves raw output (`--save-output`). Always runs Codex with `--sandbox read-only`.
+`codex-call` is a Bash wrapper that resolves the Codex binary, enforces a timeout (default 600s, configurable via `CODEX_TIMEOUT`), supports session reuse (`--session-file` / `--resume`), and saves raw output (`--save-output`). Context files are passed via `--file` flags — the wrapper injects file paths into the prompt header so Codex reads them directly in its read-only sandbox, rather than having Claude Code inline file contents into the prompt. Always runs Codex with `--sandbox read-only`.
 
 ## Requirements
 

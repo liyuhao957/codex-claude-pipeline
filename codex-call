@@ -33,6 +33,7 @@ SESSION_FILE=""
 RESUME_ID=""
 SAVE_OUTPUT=""
 PROMPT=""
+FILE_REFS=()
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -46,6 +47,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --save-output)
             SAVE_OUTPUT="$2"
+            shift 2
+            ;;
+        --file)
+            FILE_REFS+=("$2")
             shift 2
             ;;
         -)
@@ -72,9 +77,26 @@ fi
 
 if [[ -z "$PROMPT" ]]; then
     echo "ERROR: no prompt provided" >&2
-    echo "Usage: codex-call [--session-file PATH] [--resume SESSION_ID] [--save-output PATH] \"prompt\"" >&2
-    echo "       echo \"prompt\" | codex-call [--session-file PATH] [--save-output PATH] -" >&2
+    echo "Usage: codex-call [--file PATH]... [--session-file PATH] [--resume SESSION_ID] [--save-output PATH] \"prompt\"" >&2
+    echo "       echo \"prompt\" | codex-call [--file PATH]... [--session-file PATH] [--save-output PATH] -" >&2
     exit 1
+fi
+
+# --- Prepend file references to prompt ---
+if [[ ${#FILE_REFS[@]} -gt 0 ]]; then
+    FILE_BLOCK="你必须首先按顺序读取以下文件："
+    N=1
+    for f in "${FILE_REFS[@]}"; do
+        RESOLVED="$(cd "$(dirname "$f")" 2>/dev/null && echo "$(pwd)/$(basename "$f")" || echo "$f")"
+        if [[ -e "$RESOLVED" ]]; then
+            FILE_BLOCK+=$'\n'"${N}. ${RESOLVED}"
+        else
+            echo "WARN: --file target not found: $f (resolved: $RESOLVED)" >&2
+            FILE_BLOCK+=$'\n'"${N}. ${RESOLVED} (文件不存在)"
+        fi
+        N=$((N + 1))
+    done
+    PROMPT="${FILE_BLOCK}"$'\n\n---\n\n'"${PROMPT}"
 fi
 
 # --- Build codex arguments ---

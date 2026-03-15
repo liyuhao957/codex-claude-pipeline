@@ -1,6 +1,6 @@
 # Codex x Claude Code 双 Agent 协作流程
 
-全自动、无人值守的设计-实现-审查 pipeline。
+Claude Code 自编排的设计-实现-审查 pipeline。
 
 ---
 
@@ -11,16 +11,18 @@
                       │     阶段一：设计辩论 (≤3 轮)      │
                       ├─────────────────────────────────┤
                       │                                 │
-  需求描述 ──────────▶│  Codex 产出/更新 design.md       │
+  需求描述 ──────────▶│  Claude Code 写 design.md        │
                       │       ↓                         │
-                      │  Claude Code 审查设计            │
+                      │  用户确认方向                     │
                       │       ↓                         │
-                      │  VERDICT: PASS? ──yes──▶ 退出   │
-                      │       │no                       │
+                      │  Codex 审查设计                   │
                       │       ↓                         │
-                      │  Codex 按问题清单修订             │
+                      │  有 P0/P1? ──no──▶ 通过          │
+                      │       │yes                      │
                       │       ↓                         │
-                      │  (回到 Claude Code 审查)         │
+                      │  Claude Code 按分歧机制处理       │
+                      │       ↓                         │
+                      │  (回到 Codex 审查)               │
                       │                                 │
                       └───────────────┬─────────────────┘
                                       │ 设计通过
@@ -35,15 +37,15 @@
                                       │
                                       ▼
                       ┌─────────────────────────────────┐
-                      │     阶段三：实现辩论 (≤3 轮)      │
+                      │     阶段三：代码审查 (≤3 轮)      │
                       ├─────────────────────────────────┤
                       │                                 │
-                      │  Codex 读仓库 + git diff 审查    │
+                      │  Codex 审查 git diff              │
                       │       ↓                         │
-                      │  VERDICT: PASS? ──yes──▶ 完成   │
-                      │       │no                       │
+                      │  有 P0/P1? ──no──▶ 完成          │
+                      │       │yes                      │
                       │       ↓                         │
-                      │  Claude Code 按问题修复代码       │
+                      │  Claude Code 修复代码             │
                       │       ↓                         │
                       │  (回到 Codex 审查)               │
                       │                                 │
@@ -52,36 +54,60 @@
 
 ---
 
+## 角色分工
+
+| 角色 | 职责 | 权限 |
+|------|------|------|
+| **Claude Code** | 编排流程、编写设计、实现代码、修复问题 | 完全读写 |
+| **Codex** | 审查设计文档、审查代码 diff | `--sandbox read-only`（只读） |
+| **用户** | 确认设计方向、决定取舍类分歧 | 检查点介入 |
+
+---
+
 ## 轮次规则
 
-| 项目       | 设计辩论（阶段一）         | 实现辩论（阶段三）         |
+| 项目       | 设计辩论（阶段一）         | 代码审查（阶段三）         |
 |-----------|--------------------------|--------------------------|
-| 最大轮数   | 3                        | 3                        |
-| 通过标准   | 无 P0/P1 问题            | 无 P0/P1 问题            |
-| 终止条件   | PASS 或满 3 轮           | PASS 或满 3 轮           |
-| 审查方     | Claude Code              | Codex                    |
-| 修订方     | Codex                    | Claude Code              |
+| 最大轮数   | 3（有 P0）/ 2（仅 P1）    | 3（有 P0）/ 2（仅 P1）    |
+| 通过标准   | 无新 P0/P1 问题           | 无新 P0/P1 问题           |
+| 审查方     | Codex                    | Codex                    |
+| 修订方     | Claude Code              | Claude Code              |
 
 ### 问题分级
 
-- **P0**: 设计缺陷/逻辑错误，必须修复才能继续
-- **P1**: 重要问题（安全、性能、可维护性），应当修复
+- **P0**: 必须修复——不改会导致运行错误、安全漏洞或数据丢失
+- **P1**: 应当修复——性能隐患、可维护性问题
 - **P2**: 建议改进，不阻塞流程
 
-### VERDICT 格式
+### 问题分类
 
-每轮审查输出末尾必须带结构化标记，供脚本解析：
+- **[事实]**: 可通过跑代码、查文档客观验证（API 参数错误、语法错误等）
+- **[取舍]**: 多种合理方案的选择，无客观对错（Redis vs 内存缓存等）
+- **[质量]**: 代码风格和可维护性建议
 
-```
-VERDICT: PASS
+---
+
+## 上下文传递方式
+
+通过 `codex-call --file` 传递文件路径，让 Codex 在只读沙箱中自行读取：
+
+```bash
+~/.claude/bin/codex-call \
+  --file ~/.claude/prompts/dual-agent/architect.md \
+  --file CLAUDE.md \
+  --file .design/design.md \
+  --session-file .design/.codex-session \
+  --save-output .design/codex-raw-design-1.md \
+  - <<'PROMPT'
+<REQUIREMENT>
+用户原始需求
+</REQUIREMENT>
+
+审查 design.md。按照 architect.md 中的角色要求输出审查结论。
+PROMPT
 ```
 
-```
-VERDICT: REVISE
-- [P0] 缺少错误处理: ...
-- [P1] 接口命名不一致: ...
-- [P2] 建议添加注释: ...
-```
+Claude Code **不需要读取文件内容再内联到 prompt**——只需确定哪些文件传给 Codex，通过 `--file` 标志传递路径即可。
 
 ---
 
@@ -89,44 +115,42 @@ VERDICT: REVISE
 
 ```
 .design/
-├── design.md                # 设计文档（Codex 维护，逐轮更新）
-├── design-debate.md         # 设计阶段辩论记录（每轮追加）
-├── implementation-debate.md # 实现阶段辩论记录（每轮追加）
-└── changeset.md             # 实现改动摘要（Claude Code 产出）
+├── design.md                 # 设计文档（Claude Code 维护，逐轮更新）
+├── design-debate.md          # 设计阶段辩论记录（每轮追加）
+├── changeset.md              # 实现改动摘要（Claude Code 产出）
+├── diff.txt                  # git diff 快照（供 Codex 审查）
+├── implementation-debate.md  # 代码审查辩论记录（每轮追加）
+├── codex-raw-design-*.md     # Codex 设计审查原始输出（可审计）
+├── codex-raw-review-*.md     # Codex 代码审查原始输出（可审计）
+└── .codex-session            # Codex 会话 ID（用于 session 复用）
 ```
 
 ---
 
-## 关键约束
+## 分歧解决机制
 
-1. **工作目录**: 所有命令在项目根目录执行
-2. **Codex 审查方式**: 直接读仓库 + git diff，不需要手工喂 diff
-3. **权限控制**:
-   - 纯审查: `read-only` / 最小权限
-   - 改代码: `workspace-write` / `--full-auto`
-   - 非必要不使用 `danger-full-access`
-4. **轮次记录**: 每轮追加到对应 debate 文件
-5. **上下文传递**: 每次调用 agent 时包含设计文档 + 历史辩论记录
-6. **超轮处理**: 3 轮仍有 P0/P1 → 停止并输出未解决问题清单
+| 类型 | 处理方式 |
+|------|----------|
+| `[事实]` | 必须验证（跑代码、查文档、检查现有用法），验证后 `fixed` 或 `rejected`（附验证过程） |
+| `[取舍]` | 小取舍：Claude 选保守方案并说明理由。大取舍：标记 `deferred`，翻译成用户能理解的利弊，让用户决定 |
+| `[质量]` | Claude 自行判断，接受或拒绝并给出理由 |
+
+**验证者心态**：处理 Codex 反馈时默认假设 Codex 可能是对的。"我觉得不对"不是有效的拒绝理由——必须有具体依据。
 
 ---
 
-## CLI 参考
+## codex-call 参数
 
 ```bash
-# Claude Code 非交互
-claude -p "prompt" --dangerously-skip-permissions
-
-# Codex 非交互（通用）
-codex exec "prompt"                        # 基本调用
-codex exec --full-auto "prompt"            # 带写入权限 + 自动审批
-codex exec --sandbox read-only "prompt"    # 只读
-
-# Codex 代码审查（专用子命令，阶段三使用）
-codex review --uncommitted                 # 审查未提交改动
-codex review --base main                   # 审查相对 main 的改动
-codex review --commit <sha>                # 审查某次提交
+codex-call [--file PATH]... [--session-file PATH] [--resume SESSION_ID] [--save-output PATH] "prompt"
 ```
 
+| 参数 | 说明 |
+|------|------|
+| `--file PATH` | 传递文件路径给 Codex（可重复多次），Codex 在只读沙箱中自行读取 |
+| `--session-file PATH` | 启用 session 模式，将 session ID 保存到指定文件 |
+| `--resume SESSION_ID` | 续接已有会话 |
+| `--save-output PATH` | 保存 Codex 原始输出到文件 |
+
 > **Codex 路径**: PATH 优先，fallback 到 `/Applications/Codex.app/Contents/Resources/codex`
-> **非 git 项目**: 脚本检测后报错退出，提示手动执行 `git init && git add . && git commit -m 'baseline'`
+> **超时**: 默认 600 秒，可通过 `CODEX_TIMEOUT` 环境变量覆盖

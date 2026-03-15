@@ -35,13 +35,6 @@
 
 状态有四种：`fixed`、`rejected`（附验证过程或理由）、`deferred`（提交用户）、`skipped`。
 
-## Diff 大小控制
-
-如果 diff 超过 500 行，不要全部内联。改为：
-- 内联 `git diff --stat` 的输出（文件级别的变更统计）
-- 只内联单文件 diff 不超过 100 行的文件
-- 超过 100 行的文件只内联前 50 行 + 末尾 20 行，中间用 `... (省略 N 行，请自行读取源文件) ...` 标记
-
 ## 流程
 
 ### 准备
@@ -61,41 +54,34 @@
 1. 确定审查文件范围：
    - 如果存在 `.design/design.md` → 从中提取文件清单
    - 否则 → 从 `git diff --name-only <范围>` 获取
-2. **准备 Codex prompt**：用 Read 工具读取以下所有内容：
+2. **确定 Codex 文件列表**：确认以下文件是否存在（不需要读取内容）：
    - `~/.claude/prompts/dual-agent/reviewer.md`（角色 prompt）
-   - 项目根目录的 `CLAUDE.md`（如果存在，作为项目上下文）
-   - `.claude/codex-context.md`（如果存在，解析 `- ` 开头的行为文件路径，逐一读取。仅首轮发送）
-   - `.design/diff.txt`（代码 diff，注意大小控制）
+   - 项目根目录的 `CLAUDE.md`（如果存在）
+   - `.claude/codex-context.md`（如果存在，用 Read 读取 manifest，解析出文件路径列表。仅首轮传递）
+   - `.design/diff.txt`（代码 diff）
    - `.design/design.md`（如果存在，提供设计上下文）
 3. **尝试复用 session**：检查 `.design/.codex-session` 是否存在，如果存在则读取其中的 session ID
-4. 调用 Codex 审查代码，将所有内容内联（diff 按大小控制规则处理）：
+4. 调用 Codex 审查代码，通过 `--file` 传递所有文件：
 
 ```
-~/.claude/bin/codex-call [--resume <SESSION_ID>] --session-file .design/.codex-session --save-output .design/codex-raw-review-1.md - <<'PROMPT'
-<reviewer.md 的内容>
----
-
+~/.claude/bin/codex-call \
+  --file ~/.claude/prompts/dual-agent/reviewer.md \
+  --file CLAUDE.md \
+  --file .design/diff.txt \
+  <如果有 .design/design.md，加 --file .design/design.md> \
+  <如果有 codex-context.md 中的文件，每个加 --file> \
+  [--resume <SESSION_ID>] \
+  --session-file .design/.codex-session \
+  --save-output .design/codex-raw-review-1.md \
+  - <<'PROMPT'
 <REQUIREMENT>
 此处逐字引用用户原始需求（如果有 $ARGUMENTS）
 </REQUIREMENT>
 
-<PROJECT>
-此处内联项目 CLAUDE.md 的内容（如果不存在则省略此标签）
-</PROJECT>
-
-<CONTEXT>
-此处内联 .claude/codex-context.md 中列出的所有文件内容（如果不存在则省略此标签）
-每个文件用 --- FILE: <路径> --- 分隔
-</CONTEXT>
-
-<DIFF>
-此处内联 diff 内容（如果超过 500 行，按大小控制规则裁剪）
-</DIFF>
-
 审查范围仅限以下文件：
 <此处列出文件清单>
 
-按照角色要求输出审查结论。
+按照 reviewer.md 中定义的角色要求输出审查结论。
 PROMPT
 ```
 
@@ -107,23 +93,19 @@ PROMPT
 7. 第 2 轮及之后：继续使用 `--resume` 复用会话：
 
 ```
-~/.claude/bin/codex-call --resume <SESSION_ID> --session-file .design/.codex-session --save-output .design/codex-raw-review-N.md - <<'PROMPT'
-<reviewer.md 的内容>
----
-
+~/.claude/bin/codex-call \
+  --file ~/.claude/prompts/dual-agent/reviewer.md \
+  --file .design/diff.txt \
+  --file .design/implementation-debate.md \
+  --resume <SESSION_ID> \
+  --session-file .design/.codex-session \
+  --save-output .design/codex-raw-review-N.md \
+  - <<'PROMPT'
 <REQUIREMENT>
 此处逐字引用用户原始需求（如果有 $ARGUMENTS）
 </REQUIREMENT>
 
-<DIFF>
-此处内联最新的 diff 内容（按大小控制规则处理）
-</DIFF>
-
-<REVIEW_HISTORY>
-此处内联 .design/implementation-debate.md 完整内容
-</REVIEW_HISTORY>
-
-以上是之前轮次的处理记录。状态为 fixed 的问题已修复，状态为 rejected 的问题不要重复提出，除非你认为拒绝理由有具体的技术错误并能给出反驳。只关注：1）验证 fixed 问题是否真正解决，2）发现新的问题。
+以上是之前轮次的处理记录（见 implementation-debate.md）。状态为 fixed 的问题已修复，状态为 rejected 的问题不要重复提出，除非你认为拒绝理由有具体的技术错误并能给出反驳。只关注：1）验证 fixed 问题是否真正解决，2）发现新的问题。
 
 按照角色要求输出审查结论。
 PROMPT
